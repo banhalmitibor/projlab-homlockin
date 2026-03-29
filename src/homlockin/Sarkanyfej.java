@@ -13,8 +13,13 @@ public class Sarkanyfej implements HokotroFej {
     @Override
     public void munkatVegez(Utszakasz szakasz) {
         Skeleton.methodCalled(name + ".munkatVegez(" + szakasz.getName() + ")");
-        hokotro.biokerozinFogyasztas(1);
-        szakasz.olvasztas();
+        if(hokotro.biokerozinFogyasztas(1)){
+            szakasz.olvasztas();
+        }
+        else{
+            hokotro.felreall();
+        }
+        
         Skeleton.methodReturned();
     }
 

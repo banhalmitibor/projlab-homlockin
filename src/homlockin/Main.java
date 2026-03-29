@@ -59,16 +59,16 @@ public class Main {
                 case 12: UseCases.runUseCase12(); break;
                 case 13: UseCases.runUseCase13(); break; 
                 case 14: UseCases.runUseCase14(); break;
-                case 15: UseCases.runUseCase15(); break;/*
-                case 16: runUseCase16(); break;
-                case 17: runUseCase17(); break;
-                case 18: runUseCase18(); break;
-                case 19: runUseCase19(); break;
-                case 20: runUseCase20(); break;
-                case 21: runUseCase21(); break;
-                case 22: runUseCase22(); break;
-                case 23: runUseCase23(); break;
-                case 24: runUseCase24(); break; */
+                case 15: UseCases.runUseCase15(); break;
+                case 16: UseCases.runUseCase16(); break;
+                case 17: UseCases.runUseCase17(); break;
+                case 18: UseCases.runUseCase18(); break;
+                case 19: UseCases.runUseCase19(); break;
+                case 20: UseCases.runUseCase20(); break;
+                case 21: UseCases.runUseCase21(); break;
+                case 22: UseCases.runUseCase22(); break;
+                case 23: UseCases.runUseCase23(); break;
+                case 24: UseCases.runUseCase24(); break; 
                 default: System.out.println("Érvénytelen választás.");
             }
         }

@@ -13,7 +13,12 @@ public class Soszorofej implements HokotroFej {
     @Override
     public void munkatVegez(Utszakasz szakasz) {
         Skeleton.methodCalled(name + ".munkatVegez(" + szakasz.getName() + ")");
-        hokotro.soFogyasztas(1);
+        if(hokotro.soFogyasztas(1)){
+            szakasz.soSzoras();
+        }
+        else{
+            hokotro.felreall();
+        }
         szakasz.soSzoras();
         Skeleton.methodReturned();
     }

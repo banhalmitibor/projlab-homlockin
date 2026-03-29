@@ -25,12 +25,13 @@ public class Auto extends Jarmu {
                     }
                 }
             }
-        } else if (jelenlegiUtszakasz != null) {
+        } /*else if (jelenlegiUtszakasz != null) {
             boolean jarhatoE = jelenlegiUtszakasz.jarhato();
             if (!jarhatoE) {
                 elakadva = true;
             }
-        }
+        }*/
+        
         Skeleton.methodReturned();
     }
 
@@ -69,4 +70,6 @@ public class Auto extends Jarmu {
         Skeleton.methodReturned();
         return result;
     }
+
+    
 }

@@ -21,6 +21,13 @@ public abstract class Jarmu {
         Skeleton.methodReturned();
     }
 
+    public boolean beertAVegallomasba(){
+        Skeleton.methodCalled(name + ".beertAVegallomasba()");
+        boolean result = Skeleton.askYesNo("Elért az autó a végállomásra?");
+        Skeleton.methodReturned();
+        return result;
+    }
+
     // Silent setters
     public void setUtvonal(Utvonal u) { this.utvonal = u; }
     public void setJelenlegiUtszakasz(Utszakasz u) { this.jelenlegiUtszakasz = u; }

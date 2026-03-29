@@ -21,6 +21,11 @@ public class Varos {
         }
         for (Jarmu j : jarmuvek) {
             j.lep();
+            if(j.beertAVegallomasba()) {
+                Skeleton.methodCalled("v.autok.remove(j)");
+                jarmuvek.remove(j);
+                Skeleton.methodReturned();
+            }
         }
         Skeleton.methodReturned();
     }
@@ -36,7 +41,9 @@ public class Varos {
                 }
             }
         }
+        
         boolean vege = Skeleton.askYesNo("Elérte a maximális elakadások számát?");
+        
         Skeleton.methodReturned();
         return vege;
     }

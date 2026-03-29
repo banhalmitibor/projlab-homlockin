@@ -3,11 +3,13 @@ package homlockin;
 public class UseCases {
     private static Varos v;
     private static TakaritoJatekos tj;
+    private static BuszvezetoJatekos bj;
     private static Utszakasz u1;
     private static Utszakasz u2;
     private static Utszakasz u3;
     private static Hokotro hk;
     private static HokotroFej fej;
+    private static HokotroFej fej2;
     private static Jeg jeg1;
     private static Jeg jeg2;
     private static Ho ho1;
@@ -15,6 +17,7 @@ public class UseCases {
     private static Bolt bolt;
     private static Jarmu j1;
     private static Jarmu j2;
+    private static Busz busz;
     private static Utvonal utvonal;
 
 
@@ -176,6 +179,89 @@ public class UseCases {
         v.leptet();
     }
 
+    static void runUseCase16() {
+        String ucName = "Busz célba érése és pontszerzés";
+        Skeleton.startInit(ucName);
+        init10();
+
+        Skeleton.startTest(ucName);
+        v.leptet();
+    }
+
+    static void runUseCase17() {
+        String ucName = "Város léptetése és havazás";
+        Skeleton.startInit(ucName);
+        init9();
+
+        Skeleton.startTest(ucName);
+        v.leptet();
+    }
+
+    static void runUseCase18() {
+        String ucName = "Autó elakadása";
+        Skeleton.startInit(ucName);
+        init9();
+
+        Skeleton.startTest(ucName);
+        v.leptet();
+    }
+
+    static void runUseCase19() {
+        String ucName = "Játék vége ellenőrzés";
+        Skeleton.startInit(ucName);
+        init9();
+
+        Skeleton.startTest(ucName);
+        v.jatekVegeEllenorzes();
+    }
+
+    static void runUseCase20() {
+        String ucName = "Takarító játékos pénzt szerez (Hányófej)";
+        Skeleton.startInit(ucName);
+        init5();
+
+        Skeleton.startTest(ucName);
+        v.leptet();
+    }
+
+    static void runUseCase21() {
+        String ucName = "Hókotrófej csere";
+        Skeleton.startInit(ucName);
+        init2();
+
+        Skeleton.startTest(ucName);
+        Skeleton.methodCalled("tj.iranyit()");
+        hk.fejetCserel(fej2);
+        Skeleton.methodReturned();
+    }
+
+    static void runUseCase22() {
+        String ucName = "Autó célba érése";
+        Skeleton.startInit(ucName);
+        init12();
+
+        Skeleton.startTest(ucName);
+        v.leptet();
+    }
+
+    static void runUseCase23() {
+        String ucName = "Hókotró félreáll és elindul";
+        Skeleton.startInit(ucName);
+        init6();
+
+        Skeleton.startTest(ucName);
+        // First leptet: hókotró félreáll
+        v.leptet();
+
+
+        hk.soFeltoltes();
+        v.leptet();
+
+    }
+
+    static void runUseCase24(){
+
+    }
 
 
 
@@ -304,6 +390,8 @@ public class UseCases {
         u1.setJeg(jeg1);
         Skeleton.printInitCall("h.setFej(hanyofej)");
         hk.setFej(fej);
+        Skeleton.printInitCall("h.setVezeto(tj)");
+        hk.setVezeto(tj);
 
 
 
@@ -395,6 +483,68 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    public static void init9(){
+        setToNull();
+        Skeleton.printNew("Varos");
+        v = new Varos("v");
+        Skeleton.printNew("Utszakasz");
+        u1 = new Utszakasz("u1");
+        Skeleton.printNew("Utszakasz");
+        u2 = new Utszakasz("u2");
+        Skeleton.printNew("Auto");
+        j1 = new Auto("a");
+        Skeleton.printNew("Ho");
+        ho1 = new Ho("ho");
+        Skeleton.printNew("Ho");
+        ho2 = new Ho("celHo");
+        Skeleton.printNew("Jeg");
+        jeg2 = new Jeg("celjeg");
+        Skeleton.printInitCall("u2.setHo(celHo)");
+        u2.setHo(ho2);
+        Skeleton.printInitCall("u2.setJeg(celJeg)");
+        u2.setJeg(jeg2);
+        Skeleton.printNew("Utvonal");
+        utvonal = new Utvonal("utvonal");
+        Skeleton.printInitCall("u1.setHo(ho)");
+        u1.setHo(ho1);
+        Skeleton.printInitCall("u1.addKovetkezo(u2)");
+        u1.addKovetkezo(u2);
+        Skeleton.printInitCall("a.setUtvonal(utvonal)");
+        j1.setUtvonal(utvonal);
+        j1.setJelenlegiUtszakasz(u1);
+        Skeleton.printInitCall("utvonal.setCel(u2)");
+        utvonal.setCel(u2);
+        v.addJarmu(j1);
+        v.addUtszakasz(u1);
+    }
+
+    public static void init10(){
+        setToNull();
+        Skeleton.printNew("Varos");
+        v = new Varos("v");
+        Skeleton.printNew("BuszvezetoJatekos");
+        bj = new BuszvezetoJatekos("bj");
+        Skeleton.printNew("Busz");
+        busz = new Busz("b");
+        Skeleton.printNew("Utszakasz");
+        u1 = new Utszakasz("u1");
+        Skeleton.printNew("Utszakasz");
+        u2 = new Utszakasz("u2");
+        Skeleton.printNew("Utvonal");
+        utvonal = new Utvonal("utvonal");
+        Skeleton.printInitCall("u1.addKovetkezo(u2)");
+        u1.addKovetkezo(u2);
+        Skeleton.printInitCall("b.utvonalBeallit(utvonal)");
+        busz.setVezeto(bj);
+        bj.addBusz(busz);
+        utvonal.setCel(u2);
+        busz.setUtvonal(utvonal);
+        busz.setJelenlegiUtszakasz(u1);
+        Skeleton.printInitCall("bj.addBusz(b)");
+        v.addJarmu(busz);
+        v.addUtszakasz(u1);
+    }
+
     public static void init11(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -414,6 +564,7 @@ public class UseCases {
     }
 
     public static void init12(){
+        setToNull();
         Skeleton.printNew("Varos");
         v = new Varos("v");
         Skeleton.printNew("Auto");

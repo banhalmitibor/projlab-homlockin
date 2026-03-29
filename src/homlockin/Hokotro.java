@@ -1,7 +1,10 @@
 package homlockin;
 
+import java.util.List;
+
 public class Hokotro extends Jarmu {
     private HokotroFej fej;
+    private List<HokotroFej> fejek;
     private int soMennyiseg;
     private int bioKerozinMennyiseg;
     private TakaritoJatekos vezeto;
@@ -15,6 +18,7 @@ public class Hokotro extends Jarmu {
         Skeleton.methodCalled(name + ".lep()");
         if (!felreallva && fej != null && jelenlegiUtszakasz != null) {
             fej.munkatVegez(jelenlegiUtszakasz);
+            vezeto.penztKap(10);
         } else if (felreallva) {
             felreall();
         }

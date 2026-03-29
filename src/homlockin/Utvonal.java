@@ -1,7 +1,10 @@
 package homlockin;
 
+import java.util.List;
+
 public class Utvonal {
     private String name;
+    private List<Utszakasz> vonal;
     private Utszakasz cel;
 
     public Utvonal() {}
