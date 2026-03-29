@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = Skeleton.getScanner();
 
     public static void main(String[] args) {
         while (true) {
@@ -89,7 +89,7 @@ public class Main {
         Skeleton.printNew("Hokotro");
         Hokotro hk = new Hokotro("hk");
         Skeleton.printNew("Soprofej");
-        Soprofej fej = new Soprofej();
+        Soprofej fej = new Soprofej("fej");
         Skeleton.printInitCall("u1.addKovetkezo(u2)");
         u1.addKovetkezo(u2);
         Skeleton.printInitCall("hk.setFej(fej)");
@@ -120,11 +120,11 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz u = new Utszakasz("u");
         Skeleton.printNew("Jeg");
-        Jeg jelenlegiJeg = new Jeg();
+        Jeg jelenlegiJeg = new Jeg("jelenlegiJeg");
         Skeleton.printNew("Hokotro");
         Hokotro hh = new Hokotro("hh");
         Skeleton.printNew("Jegtorofej");
-        Jegtorofej fej = new Jegtorofej();
+        Jegtorofej fej = new Jegtorofej("fej");
         Skeleton.printInitCall("u.setJeg(jelenlegiJeg)");
         u.setJeg(jelenlegiJeg);
         Skeleton.printInitCall("hh.fejetCserel(fej)");
@@ -155,11 +155,11 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz jelenlegiUtszakasz = new Utszakasz("jelenlegiUtszakasz");
         Skeleton.printNew("Ho");
-        Ho jelenlegiHo = new Ho();
+        Ho jelenlegiHo = new Ho("jelenlegiHo");
         Skeleton.printNew("Hokotro");
         Hokotro h = new Hokotro("h");
         Skeleton.printNew("Hanyofej");
-        Hanyofej hanyofej = new Hanyofej();
+        Hanyofej hanyofej = new Hanyofej("hanyofej");
         Skeleton.printInitCall("jelenlegiUtszakasz.setHo(jelenlegiHo)");
         jelenlegiUtszakasz.setHo(jelenlegiHo);
         Skeleton.printInitCall("h.setFej(hanyofej)");
@@ -187,7 +187,7 @@ public class Main {
         Skeleton.printNew("Hokotro");
         Hokotro hokotro = new Hokotro("hokotro");
         Skeleton.printNew("Soszorofej");
-        Soszorofej fej = new Soszorofej();
+        Soszorofej fej = new Soszorofej("fej");
         Skeleton.printInitCall("hokotro.fejetCserel(fej)");
         hokotro.setFej(fej);
         Skeleton.printInitCall("takarito.hokotroHozzaadas(hokotro)");
@@ -214,7 +214,7 @@ public class Main {
         Skeleton.printNew("Hokotro");
         Hokotro hokotro = new Hokotro("hokotro");
         Skeleton.printNew("Sarkanyfej");
-        Sarkanyfej fej = new Sarkanyfej();
+        Sarkanyfej fej = new Sarkanyfej("fej");
         Skeleton.printInitCall("hokotro.fejetCserel(fej)");
         hokotro.setFej(fej);
         Skeleton.printInitCall("tj.hokotroHozzaadas(hokotro)");
@@ -239,11 +239,11 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz jelenlegiUtszakasz = new Utszakasz("jelenlegiUtszakasz");
         Skeleton.printNew("Ho");
-        Ho jelenlegiHo = new Ho();
+        Ho jelenlegiHo = new Ho("jelenlegiHo");
         Skeleton.printNew("Hokotro");
         Hokotro h = new Hokotro("h");
         Skeleton.printNew("Soszorofej");
-        Soszorofej fej = new Soszorofej();
+        Soszorofej fej = new Soszorofej("fej");
         Skeleton.printInitCall("jelenlegiUtszakasz.setHo(jelenlegiHo)");
         jelenlegiUtszakasz.setHo(jelenlegiHo);
         Skeleton.printInitCall("h.fejetCserel(fej)");
@@ -269,13 +269,13 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz jelenlegiUtszakasz = new Utszakasz("jelenlegiUtszakasz");
         Skeleton.printNew("Ho");
-        Ho jelenlegiHo = new Ho();
+        Ho jelenlegiHo = new Ho("jelenlegiHo");
         Skeleton.printNew("Jeg");
-        Jeg jelenlegiJeg = new Jeg();
+        Jeg jelenlegiJeg = new Jeg("jelenlegiJeg");
         Skeleton.printNew("Hokotro");
         Hokotro hk = new Hokotro("hk");
         Skeleton.printNew("Sarkanyfej");
-        Sarkanyfej fej = new Sarkanyfej();
+        Sarkanyfej fej = new Sarkanyfej("fej");
         Skeleton.printInitCall("jelenlegiUtszakasz.setHo(jelenlegiHo)");
         jelenlegiUtszakasz.setHo(jelenlegiHo);
         Skeleton.printInitCall("jelenlegiUtszakasz.setJeg(jelenlegiJeg)");
@@ -305,13 +305,13 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz u2 = new Utszakasz("u2");
         Skeleton.printNew("Ho");
-        Ho ho = new Ho();
+        Ho ho = new Ho("ho");
         Skeleton.printNew("Ho");
-        Ho jobbHo = new Ho();
+        Ho jobbHo = new Ho("jobbHo");
         Skeleton.printNew("Hokotro");
         Hokotro hk = new Hokotro("hk");
         Skeleton.printNew("Soprofej");
-        Soprofej fej = new Soprofej();
+        Soprofej fej = new Soprofej("fej");
         Skeleton.printInitCall("u1.setHo(ho)");
         u1.setHo(ho);
         Skeleton.printInitCall("u2.setHo(jobbHo)");
@@ -342,7 +342,7 @@ public class Main {
         Skeleton.printNew("Hokotro");
         Hokotro hk = new Hokotro("hk");
         Skeleton.printNew("Soprofej");
-        Soprofej fej = new Soprofej();
+        Soprofej fej = new Soprofej("fej");
         Skeleton.printInitCall("hk.setFej(fej)");
         hk.setFej(fej);
         Skeleton.printInitCall("tj.hokotroHozzaadas(hk)");
@@ -421,7 +421,7 @@ public class Main {
         Skeleton.printNew("Auto");
         Auto szomszedosJarmu = new Auto("szomszedosJarmu");
         Skeleton.printNew("Jeg");
-        Jeg celJeg = new Jeg();
+        Jeg celJeg = new Jeg("celJeg");
         Skeleton.printNew("Utvonal");
         Utvonal utvonal = new Utvonal("utvonal");
         Skeleton.printInitCall("uJelenlegi.setJeg(celJeg)");
@@ -503,9 +503,9 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz uCel = new Utszakasz("uCel");
         Skeleton.printNew("Ho");
-        Ho ho = new Ho();
+        Ho ho = new Ho("ho");
         Skeleton.printNew("Jeg");
-        Jeg jeg = new Jeg();
+        Jeg jeg = new Jeg("jeg");
         Skeleton.printNew("Utvonal");
         Utvonal utvonal = new Utvonal("u");
         Skeleton.printInitCall("uJelenlegi.setHo(ho)");
@@ -596,9 +596,9 @@ public class Main {
         Skeleton.methodReturned();
         Skeleton.methodCalled("b.lep()");
         utvonal.getKivantUtszakasz();
-        utvonal.kovetkezoUtszakasz(u2);
-        boolean vegallomas = Skeleton.askYesNo("Elérte a végállomást?");
-        if (vegallomas) {
+        Utszakasz kovetkezo = utvonal.kovetkezoUtszakasz(u2);
+        if (kovetkezo == null) {
+            // Elérte a végállomást
             bj.pontotKap();
         }
         Skeleton.methodReturned();
@@ -617,7 +617,7 @@ public class Main {
         Skeleton.printNew("Auto");
         Auto a = new Auto("a");
         Skeleton.printNew("Ho");
-        Ho ho = new Ho();
+        Ho ho = new Ho("ho");
         Skeleton.printNew("Utvonal");
         Utvonal utvonal = new Utvonal("utvonal");
         Skeleton.printInitCall("u1.setHo(ho)");
@@ -707,11 +707,11 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz jelenlegiUtszakasz = new Utszakasz("jelenlegiUtszakasz");
         Skeleton.printNew("Ho");
-        Ho jelenlegiHo = new Ho();
+        Ho jelenlegiHo = new Ho("jelenlegiHo");
         Skeleton.printNew("Hokotro");
         Hokotro hk = new Hokotro("hk");
         Skeleton.printNew("Hanyofej");
-        Hanyofej hanyofej = new Hanyofej();
+        Hanyofej hanyofej = new Hanyofej("hanyofej");
         Skeleton.printInitCall("jelenlegiUtszakasz.setHo(jelenlegiHo)");
         jelenlegiUtszakasz.setHo(jelenlegiHo);
         Skeleton.printInitCall("hk.setFej(hanyofej)");
@@ -742,9 +742,9 @@ public class Main {
         Skeleton.printNew("Hokotro");
         Hokotro h = new Hokotro("h");
         Skeleton.printNew("Soszorofej");
-        Soszorofej fej1 = new Soszorofej();
+        Soszorofej fej1 = new Soszorofej("fej1");
         Skeleton.printNew("Hanyofej");
-        Hanyofej fej2 = new Hanyofej();
+        Hanyofej fej2 = new Hanyofej("fej2");
         Skeleton.printInitCall("h.setFej(fej1)");
         h.setFej(fej1);
         Skeleton.printInitCall("tj.hokotroHozzaadas(h)");
@@ -773,9 +773,9 @@ public class Main {
         Skeleton.methodReturned();
         Skeleton.methodCalled("a.lep()");
         utvonal.getKivantUtszakasz();
-        utvonal.kovetkezoUtszakasz(uCel);
-        boolean celbaErt = Skeleton.askYesNo("Elérte a célállomást?");
-        if (celbaErt) {
+        Utszakasz kovetkezo = utvonal.kovetkezoUtszakasz(uCel);
+        if (kovetkezo == null) {
+            // Autó elérte a célt, eltávolítjuk
             v.removeJarmu(a);
             System.out.println("\t\t\t[autó eltávolítva a városból]");
         }
@@ -794,11 +794,11 @@ public class Main {
         Skeleton.printNew("Utszakasz");
         Utszakasz jelenlegiUtszakasz = new Utszakasz("jelenlegiUtszakasz");
         Skeleton.printNew("Ho");
-        Ho jelenlegiHo = new Ho();
+        Ho jelenlegiHo = new Ho("jelenlegiHo");
         Skeleton.printNew("Hokotro");
         Hokotro h = new Hokotro("h");
         Skeleton.printNew("Soszorofej");
-        Soszorofej fej = new Soszorofej();
+        Soszorofej fej = new Soszorofej("fej");
         Skeleton.printInitCall("jelenlegiUtszakasz.setHo(jelenlegiHo)");
         jelenlegiUtszakasz.setHo(jelenlegiHo);
         Skeleton.printInitCall("h.fejetCserel(fej)");

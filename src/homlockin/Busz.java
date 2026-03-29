@@ -32,7 +32,7 @@ public class Busz extends Jarmu {
     }
 
     public void utvonalBeallit(Utvonal u) {
-        Skeleton.methodCalled(name + ".utvonalBeallit(utvonal)");
+        Skeleton.methodCalled(name + ".utvonalBeallit(" + (u != null ? u.getName() : "null") + ")");
         this.utvonal = u;
         Skeleton.methodReturned();
     }

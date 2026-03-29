@@ -8,13 +8,13 @@ public class Utvonal {
     public Utvonal(String name) { this.name = name; }
 
     public Utszakasz getKivantUtszakasz() {
-        Skeleton.methodCalled("utvonal.getKivantUtszakasz()");
+        Skeleton.methodCalled(name + ".getKivantUtszakasz()");
         Skeleton.methodReturned();
         return cel;
     }
 
     public Utszakasz kovetkezoUtszakasz(Utszakasz csonk) {
-        Skeleton.methodCalled("utvonal.kovetkezoUtszakasz(" + (csonk != null ? csonk.getName() : "null") + ")");
+        Skeleton.methodCalled(name + ".kovetkezoUtszakasz(" + (csonk != null ? csonk.getName() : "null") + ")");
         boolean celElert = Skeleton.askYesNo("Elérte a célállomást?");
         Utszakasz result = celElert ? null : cel;
         Skeleton.methodReturned();

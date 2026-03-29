@@ -46,7 +46,7 @@ public class TakaritoJatekos extends Jatekos {
     }
 
     public void hokotroHozzaadas(Hokotro hokotro) {
-        Skeleton.methodCalled(name + ".hokotroHozzaadas(hokotro)");
+        Skeleton.methodCalled(name + ".hokotroHozzaadas(" + hokotro.getName() + ")");
         hokotrok.add(hokotro);
         Skeleton.methodReturned();
     }

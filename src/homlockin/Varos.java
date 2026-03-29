@@ -15,7 +15,7 @@ public class Varos {
     public Varos(String name) { this.name = name; }
 
     public void leptet() {
-        Skeleton.methodCalled("v.leptet()");
+        Skeleton.methodCalled(name + ".leptet()");
         for (Utszakasz u : utszakaszok) {
             u.hoEsik();
         }
@@ -26,13 +26,13 @@ public class Varos {
     }
 
     public boolean jatekVegeEllenorzes() {
-        Skeleton.methodCalled("v.jatekVegeEllenorzes()");
-        int db = 0;
+        Skeleton.methodCalled(name + ".jatekVegeEllenorzes()");
+        int elakadtDb = 0;
         for (Jarmu j : jarmuvek) {
             if (j instanceof Auto) {
                 Auto a = (Auto) j;
                 if (a.getElakadva()) {
-                    db++;
+                    elakadtDb++;
                 }
             }
         }

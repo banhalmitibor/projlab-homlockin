@@ -37,8 +37,12 @@ public class Skeleton {
     }
 
     public static boolean askYesNo(String question) {
-        System.out.print("\t".repeat(depth) + question + " (y/n): ");
+        System.out.print("\t".repeat(depth) + question + " (i/n): ");
         String answer = scanner.nextLine().trim().toLowerCase();
-        return answer.equals("y") || answer.equals("yes") || answer.equals("i") || answer.equals("igen");
+        return answer.equals("i") || answer.equals("igen") || answer.equals("y") || answer.equals("yes");
+    }
+
+    public static Scanner getScanner() {
+        return scanner;
     }
 }
