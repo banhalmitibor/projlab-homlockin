@@ -1,7 +1,5 @@
 package homlockin;
 
-import java.rmi.server.SkeletonMismatchException;
-
 /**
  * A {@code UseCases} osztály a játék use case-eit (forgatókönyveit) valósítja meg
  * a skeleton tesztelési módszertan szerint. Minden egyes metódus egy konkrét
@@ -44,13 +42,6 @@ public class UseCases {
 
         Skeleton.startTest(ucName);
         v.leptet();
-        /*Skeleton.methodCalled("v.leptet()");
-        Skeleton.methodCalled("u1.hoEsik()");
-        Skeleton.methodReturned();
-        Skeleton.methodCalled("hk.lep()");
-        fej.munkatVegez(u1);
-        Skeleton.methodReturned();
-        Skeleton.methodReturned();*/
     }
 
     /**
@@ -63,10 +54,7 @@ public class UseCases {
         init8();
 
         Skeleton.startTest(ucName);
-        //Skeleton.methodCalled("v.leptet()");
         v.leptet();
-        //Skeleton.methodCalled("u.hoEsik()");
-        //Skeleton.methodCalled("hh.lep()");
     }
 
 
@@ -80,10 +68,7 @@ public class UseCases {
         init5();
 
         Skeleton.startTest(ucName);
-        //Skeleton.methodCalled("h.lep()");
         v.leptet();
-        //hanyofej.munkatVegez(jelenlegiUtszakasz);
-        //Skeleton.methodReturned();
     }
 
     /**
@@ -98,9 +83,6 @@ public class UseCases {
         Skeleton.startTest(ucName);
         v.leptet();
 
-        //Skeleton.methodCalled("hokotro.lep()");
-        //fej.munkatVegez(u1);
-        //Skeleton.methodReturned();
     }
 
     /**
