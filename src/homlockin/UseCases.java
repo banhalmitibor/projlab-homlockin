@@ -1,5 +1,7 @@
 package homlockin;
 
+import java.rmi.server.SkeletonMismatchException;
+
 public class UseCases {
     private static Varos v;
     private static TakaritoJatekos tj;
@@ -250,17 +252,22 @@ public class UseCases {
         init6();
 
         Skeleton.startTest(ucName);
-        // First leptet: hókotró félreáll
         v.leptet();
 
-
-        hk.soFeltoltes();
         v.leptet();
 
     }
 
     static void runUseCase24(){
+        String ucName = "Busz indulása";
+        Skeleton.startInit(ucName);
+        init10();
 
+        Skeleton.startTest(ucName);
+        Skeleton.methodCalled("bj.iranyit()");
+        busz.utvonalBeallit(utvonal);
+        Skeleton.methodReturned();
+        v.leptet();
     }
 
 
@@ -281,6 +288,8 @@ public class UseCases {
         fej = new Soprofej("fej");
         Skeleton.printInitCall("u1.addKovetkezo(u2)");
         u1.addKovetkezo(u2);
+        Skeleton.printInitCall("hk.setVezeto(tj)");
+        hk.setVezeto(tj);
         Skeleton.printInitCall("hk.setFej(fej)");
         hk.setFej(fej);
         Skeleton.printInitCall("tj.hokotroHozzaadas(hk)");
@@ -303,6 +312,8 @@ public class UseCases {
         fej = new Soszorofej("fej");
         Skeleton.printInitCall("fej.setHokotro(hokotro)");
         fej.setHokotro(hk);
+        Skeleton.printInitCall("hk.setVezeto(tj)");
+        hk.setVezeto(tj);
         Skeleton.printInitCall("hokotro.fejetCserel(fej)");
         hk.setFej(fej);
         Skeleton.printInitCall("takarito.hokotroHozzaadas(hokotro)");
@@ -325,6 +336,8 @@ public class UseCases {
         fej = new Sarkanyfej("fej");
         Skeleton.printInitCall("fej.setHokotro(hokotro)");
         fej.setHokotro(hk);
+        Skeleton.printInitCall("hk.setVezeto(tj)");
+        hk.setVezeto(tj);
         Skeleton.printInitCall("hokotro.fejetCserel(fej)");
         hk.setFej(fej);
         Skeleton.printInitCall("tj.hokotroHozzaadas(hokotro)");
@@ -361,6 +374,8 @@ public class UseCases {
         u2.setHo(ho2);
         Skeleton.printInitCall("u1.setJobbUt(u2)");
         u1.setJobbUt(u2);
+        Skeleton.printInitCall("hk.setVezeto(tj)");
+        hk.setVezeto(tj);
         Skeleton.printInitCall("hk.setFej(fej)");
         hk.setFej(fej);
         Skeleton.printInitCall("tj.hokotroHozzaadas(hk)");
@@ -405,7 +420,7 @@ public class UseCases {
         Skeleton.printNew("Varos");
         v = new Varos("v");
         Skeleton.printNew("TakaritoJatekos");
-        tj = new TakaritoJatekos("takaritod");
+        tj = new TakaritoJatekos("takaritoJ");
         Skeleton.printNew("Utszakasz");
         u1 = new Utszakasz("jelenlegiUtszakasz");
         Skeleton.printNew("Ho");
@@ -418,6 +433,8 @@ public class UseCases {
         fej = new Soszorofej("fej");
         Skeleton.printInitCall("fej.setHokotro(h)");
         fej.setHokotro(hk);
+        Skeleton.printInitCall("h.setVezeto(takaritoJ)");
+        hk.setVezeto(tj);
         Skeleton.printInitCall("jelenlegiUtszakasz.setHo(jelenlegiHo)");
         u1.setHo(ho1);
         Skeleton.printInitCall("jelenlegiUtszakasz.setJeg(jelenlegiJeg)");
@@ -425,7 +442,7 @@ public class UseCases {
 
         Skeleton.printInitCall("h.fejetCserel(fej)");
         hk.setFej(fej);
-        Skeleton.printInitCall("takaritod.hokotroHozzaadas(h)");
+        Skeleton.printInitCall("takaritoJ.hokotroHozzaadas(h)");
         hk.setJelenlegiUtszakasz(u1);
         v.addJarmu(hk);
     }
@@ -452,6 +469,8 @@ public class UseCases {
         u1.setHo(ho1);
         Skeleton.printInitCall("jelenlegiUtszakasz.setJeg(jelenlegiJeg)");
         u1.setJeg(jeg1);
+        Skeleton.printInitCall("hk.setVezeto(tj)");
+        hk.setVezeto(tj);
         Skeleton.printInitCall("hk.fejetCserel(fej)");
         hk.setFej(fej);
         Skeleton.printInitCall("th.hokotroHozzaadas(hk)");
@@ -475,7 +494,9 @@ public class UseCases {
         fej = new Jegtorofej("fej");
         Skeleton.printInitCall("u.setJeg(jelenlegiJeg)");
         u1.setJeg(jeg1);
-        Skeleton.printInitCall("hh.fejetCserel(fej)");
+        Skeleton.printInitCall("hk.setVezeto(tj)");
+        hk.setVezeto(tj);
+        Skeleton.printInitCall("hk.fejetCserel(fej)");
         hk.setFej(fej);
         Skeleton.printInitCall("takaritoJ.hokotroHozzaadas(hh)");
         hk.setJelenlegiUtszakasz(u1);

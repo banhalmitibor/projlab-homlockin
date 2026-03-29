@@ -21,11 +21,12 @@ public class Varos {
         }
         for (Jarmu j : jarmuvek) {
             j.lep();
-            if(j.beertAVegallomasba()) {
-                Skeleton.methodCalled("v.autok.remove(j)");
-                jarmuvek.remove(j);
-                Skeleton.methodReturned();
-            }
+            if(j.getClass() == Auto.class)
+                if(j.beertAVegallomasba()) {
+                    Skeleton.methodCalled("v.autok.remove(j)");
+                    jarmuvek.remove(j);
+                    Skeleton.methodReturned();
+                }
         }
         Skeleton.methodReturned();
     }

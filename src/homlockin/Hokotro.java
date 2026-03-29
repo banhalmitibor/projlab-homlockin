@@ -16,12 +16,10 @@ public class Hokotro extends Jarmu {
     @Override
     public void lep() {
         Skeleton.methodCalled(name + ".lep()");
-        if (!felreallva && fej != null && jelenlegiUtszakasz != null) {
+        if (fej != null && jelenlegiUtszakasz != null) {
             fej.munkatVegez(jelenlegiUtszakasz);
             vezeto.penztKap(10);
-        } else if (felreallva) {
-            felreall();
-        }
+        } 
         Skeleton.methodReturned();
     }
 
