@@ -39,6 +39,6 @@ public class Skeleton {
     public static boolean askYesNo(String question) {
         System.out.print("\t".repeat(depth) + question + " (y/n): ");
         String answer = scanner.nextLine().trim().toLowerCase();
-        return answer.equals("y") || answer.equals("yes") || answer.equals("i");
+        return answer.equals("y") || answer.equals("yes") || answer.equals("i") || answer.equals("igen");
     }
 }
