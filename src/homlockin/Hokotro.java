@@ -14,7 +14,7 @@ public class Hokotro extends Jarmu {
     public void lep() {
         Skeleton.methodCalled(name + ".lep()");
         if (!felreallva && fej != null && jelenlegiUtszakasz != null) {
-            fej.munkatVegez(jelenlegiUtszakasz, this);
+            fej.munkatVegez(jelenlegiUtszakasz);
         } else if (felreallva) {
             felreall();
         }
@@ -24,7 +24,7 @@ public class Hokotro extends Jarmu {
     public void takarit() {
         Skeleton.methodCalled(name + ".takarit()");
         if (fej != null && jelenlegiUtszakasz != null) {
-            fej.munkatVegez(jelenlegiUtszakasz, this);
+            fej.munkatVegez(jelenlegiUtszakasz);
         }
         if (vezeto != null) {
             vezeto.penztKap(1);

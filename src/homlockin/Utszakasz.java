@@ -57,6 +57,9 @@ public class Utszakasz {
         if (ho != null) {
             ho.eltakarit();
         }
+        if (jeg != null) {
+            jeg.eltakarit();
+        }
         Skeleton.methodReturned();
     }
 

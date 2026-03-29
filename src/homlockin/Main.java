@@ -45,14 +45,14 @@ public class Main {
             }
             if (choice == 0) break;
             switch (choice) {
-                case 1: runUseCase1(); break;
-                case 2: runUseCase2(); break;
-                case 3: runUseCase3(); break;
-                case 4: runUseCase4(); break;
-                case 5: runUseCase5(); break;
-                case 6: runUseCase6(); break;
-                case 7: runUseCase7(); break;
-                case 8: runUseCase8(); break;
+                case 1: UseCases.runUseCase1(); break;
+                case 2: UseCases.runUseCase2(); break;
+                case 3: UseCases.runUseCase3(); break;
+                case 4: UseCases.runUseCase4(); break;
+                case 5: UseCases.runUseCase5(); break;
+                case 6: UseCases.runUseCase6(); break; 
+                case 7: UseCases.runUseCase7(); break;
+                case 8: UseCases.runUseCase8(); break;/*
                 case 9: runUseCase9(); break;
                 case 10: runUseCase10(); break;
                 case 11: runUseCase11(); break;
@@ -68,14 +68,14 @@ public class Main {
                 case 21: runUseCase21(); break;
                 case 22: runUseCase22(); break;
                 case 23: runUseCase23(); break;
-                case 24: runUseCase24(); break;
+                case 24: runUseCase24(); break; */
                 default: System.out.println("Érvénytelen választás.");
             }
         }
     }
 
     // UC1: Hókotró sima közlekedése (nincs takarítás)
-    static void runUseCase1() {
+    /*static void runUseCase1() {
         String ucName = "Hókotró sima közlekedése (nincs takarítás)";
         Skeleton.startInit(ucName);
         Skeleton.printNew("Varos");
@@ -107,10 +107,10 @@ public class Main {
         fej.munkatVegez(u1, hk);
         Skeleton.methodReturned();
         Skeleton.methodReturned();
-    }
+    }*/
 
     // UC2: Jégtörőfejjel jégtörés
-    static void runUseCase2() {
+    /*static void runUseCase2() {
         String ucName = "Jégtörőfejjel jégtörés";
         Skeleton.startInit(ucName);
         Skeleton.printNew("Varos");
@@ -135,14 +135,24 @@ public class Main {
         v.addUtszakasz(u);
 
         Skeleton.startTest(ucName);
-        Skeleton.methodCalled("v.leptet()");
-        Skeleton.methodCalled("u.hoEsik()");
-        Skeleton.methodReturned();
-        Skeleton.methodCalled("hh.lep()");
-        fej.munkatVegez(u, hh);
-        Skeleton.methodReturned();
-        Skeleton.methodReturned();
-    }
+        //Skeleton.methodCalled("v.leptet()");
+        v.leptet();
+        //Skeleton.methodCalled("u.hoEsik()");
+        //Skeleton.methodCalled("hh.lep()");
+    }*/
+
+
+
+
+
+
+
+
+    /* 
+
+
+
+
 
     // UC3: Takarít havat/jégtörmeléket hányófejjel
     static void runUseCase3() {
@@ -849,4 +859,12 @@ public class Main {
         Skeleton.methodReturned();
         Skeleton.methodReturned();
     }
+
+
+
+
+
+
+
+    */
 }
