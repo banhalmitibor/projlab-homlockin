@@ -93,12 +93,4 @@ public class Skeleton {
         return answer.equals("i") || answer.equals("igen") || answer.equals("y") || answer.equals("yes");
     }
 
-    /**
-     * Visszaadja a felhasználói bevitel olvasásához használt scanner objektumot.
-     *
-     * @return a közös {@link Scanner} objektum
-     */
-    public static Scanner getScanner() {
-        return scanner;
-    }
 }

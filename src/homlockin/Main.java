@@ -10,8 +10,8 @@ import java.util.Scanner;
  */
 public class Main {
 
-    /** A felhasználói bemenet olvasásához használt scanner, amelyet a {@link Skeleton} oszt meg. */
-    private static final Scanner scanner = Skeleton.getScanner();
+    /** A felhasználói bevitel olvasásához használt scanner objektum. */
+    private static final Scanner scanner = new Scanner(System.in);
 
     /**
      * A program belépési pontja. Megjeleníti az elérhető use case-ek listáját,
