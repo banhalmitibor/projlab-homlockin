@@ -2,10 +2,24 @@ package homlockin;
 
 import java.util.Scanner;
 
+/**
+ * A {@code Main} osztály a program belépési pontja. Interaktív menüt jelenít meg,
+ * amelyen keresztül a felhasználó kiválaszthatja, melyik use case-t kívánja futtatni.
+ * A use case-ek a skeleton tesztelési módszertan szerint tesztelik a játék egyes
+ * funkcióit, például hókotró közlekedést, takarítást, ütközéseket és vásárlásokat.
+ */
 public class Main {
 
+    /** A felhasználói bemenet olvasásához használt scanner, amelyet a {@link Skeleton} oszt meg. */
     private static final Scanner scanner = Skeleton.getScanner();
 
+    /**
+     * A program belépési pontja. Megjeleníti az elérhető use case-ek listáját,
+     * beolvassa a felhasználó választását, és elindítja a megfelelő use case-t
+     * a {@link UseCases} osztályon keresztül. A 0 választással lehet kilépni.
+     *
+     * @param args parancssori argumentumok (nem használt)
+     */
     public static void main(String[] args) {
         while (true) {
             System.out.println("\nElérhető Use-Case-ek:");
