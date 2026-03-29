@@ -10,7 +10,7 @@ public class Utszakasz {
     protected Utszakasz jobbUt;
     protected boolean jarhatatlan;
     protected List<Utszakasz> kovetkezok = new ArrayList<>();
-    protected List<Jarmu> jarmuvek = new ArrayList<>();
+    protected Jarmu jarmu;
 
     public Utszakasz() {}
     public Utszakasz(String name) { this.name = name; }
@@ -23,7 +23,7 @@ public class Utszakasz {
         Skeleton.methodReturned();
     }
 
-    public Utszakasz kovetkezoUtszakasz() {
+    public Utszakasz kovetkezoUtszakasz(Utszakasz cel) {
         Skeleton.methodCalled(name + ".kovetkezoUtszakasz()");
         Utszakasz result = jobbUt;
         if (!kovetkezok.isEmpty()) result = kovetkezok.get(0);
@@ -47,9 +47,28 @@ public class Utszakasz {
 
     public boolean jarhato() {
         Skeleton.methodCalled(name + ".jarhato()");
-        boolean result = Skeleton.askYesNo("Járható az út?");
+        boolean result = true;
+        if(ho.magasHo()){
+            result = false;
+        }
+        if(jarmu != null){
+            result = false;
+        }
         Skeleton.methodReturned();
         return result;
+    }
+
+    public void stepOn(Jarmu j) { 
+        Skeleton.methodCalled(name + ".stepOn()");
+        if(jeg.jegPancel()){
+            j.csuszkal();
+        }
+        Skeleton.methodReturned();
+    }
+
+
+    public void setJarmu(Jarmu j) { 
+        jarmu = j;
     }
 
     public void hoLesopres() {
@@ -118,17 +137,26 @@ public class Utszakasz {
         Skeleton.methodReturned();
     }
 
-    // Silent setters
     public void setHo(Ho ho) { this.ho = ho; }
     public void setJeg(Jeg jeg) { this.jeg = jeg; }
     public void setJobbUt(Utszakasz u) { this.jobbUt = u; }
     public void addKovetkezo(Utszakasz u) { this.kovetkezok.add(u); }
     public void setCsapadek(Csapadek c) {}
-    public void addJarmu(Jarmu j) { this.jarmuvek.add(j); }
-    public void removeJarmu(Jarmu j) { this.jarmuvek.remove(j); }
+
+
+    
+
 
     public Ho getHo() { return ho; }
     public Jeg getJeg() { return jeg; }
-    public Utszakasz getJobbUt() { return jobbUt; }
+    public Utszakasz getJobbUt() { 
+        Skeleton.methodCalled(name + ".getJobbraLevoSzakasz()");
+        
+        Skeleton.methodReturned();
+        return jobbUt; 
+    }
     public String getName() { return name; }
+    public Jarmu getJarmu() {
+        return jarmu;
+    }
 }

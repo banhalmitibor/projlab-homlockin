@@ -12,11 +12,16 @@ public class Auto extends Jarmu {
         if (utvonal != null) {
             Utszakasz cel = utvonal.getKivantUtszakasz();
             if (cel != null) {
-                Utszakasz kovetkezo = utvonal.kovetkezoUtszakasz(cel);
+                Utszakasz kovetkezo = jelenlegiUtszakasz.kovetkezoUtszakasz(cel);
                 if (kovetkezo != null) {
                     boolean jarhatoE = kovetkezo.jarhato();
                     if (!jarhatoE) {
                         elakadva = true;
+                    }
+                    else{
+                        this.setJelenlegiUtszakasz(kovetkezo);
+                        kovetkezo.stepOn(this);
+                        
                     }
                 }
             }
@@ -30,7 +35,27 @@ public class Auto extends Jarmu {
     }
 
     @Override
-    public void utkozik() {
+    public void csuszkal() {
+        Skeleton.methodCalled(name + ".csuszkal()");
+        //boolean utkozesVan = Skeleton.askYesNo("Ütközés van?");
+        Utszakasz csuszkalvaKov = jelenlegiUtszakasz.csuszvaKovetkezoUtszakasz();
+        Jarmu szomJarmu = csuszkalvaKov.getJarmu();
+        if (szomJarmu !=null) {
+            szomJarmu.utkozes(this);
+            utkozes(szomJarmu);
+        }
+        else {
+            jelenlegiUtszakasz = csuszkalvaKov;
+
+            csuszkalvaKov.setJarmu(this);
+            Skeleton.methodCalled(csuszkalvaKov.getName()+".setJarmu()");
+            Skeleton.methodReturned();
+        }
+        Skeleton.methodReturned();
+    }
+
+    @Override
+    public void utkozes(Jarmu j2) {
         Skeleton.methodCalled(name + ".utkozik()");
         if (jelenlegiUtszakasz != null) {
             jelenlegiUtszakasz.jarhatatlannaValik();

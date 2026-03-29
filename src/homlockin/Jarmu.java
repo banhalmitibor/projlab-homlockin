@@ -7,7 +7,7 @@ public abstract class Jarmu {
 
     public abstract void lep();
 
-    public void utkozik() {
+    public void utkozes(Jarmu j2) {
         Skeleton.methodCalled(name + ".utkozik()");
         Skeleton.methodReturned();
     }
@@ -16,7 +16,7 @@ public abstract class Jarmu {
         Skeleton.methodCalled(name + ".csuszkal()");
         boolean utkozesVan = Skeleton.askYesNo("Ütközés van?");
         if (utkozesVan) {
-            utkozik();
+            //utkozes();
         }
         Skeleton.methodReturned();
     }

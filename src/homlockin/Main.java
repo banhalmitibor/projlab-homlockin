@@ -52,13 +52,13 @@ public class Main {
                 case 5: UseCases.runUseCase5(); break;
                 case 6: UseCases.runUseCase6(); break; 
                 case 7: UseCases.runUseCase7(); break;
-                case 8: UseCases.runUseCase8(); break;/*
-                case 9: runUseCase9(); break;
-                case 10: runUseCase10(); break;
-                case 11: runUseCase11(); break;
-                case 12: runUseCase12(); break;
-                case 13: runUseCase13(); break;
-                case 14: runUseCase14(); break;
+                case 8: UseCases.runUseCase8(); break;
+                case 9: UseCases.runUseCase9(); break;
+                case 10: UseCases.runUseCase10(); break;
+                case 11: UseCases.runUseCase11(); break;
+                case 12: UseCases.runUseCase12(); break;
+                case 13: UseCases.runUseCase13(); break; 
+                case 14: UseCases.runUseCase14(); break;/*
                 case 15: runUseCase15(); break;
                 case 16: runUseCase16(); break;
                 case 17: runUseCase17(); break;

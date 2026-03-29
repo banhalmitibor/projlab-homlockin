@@ -15,7 +15,7 @@ public class Busz extends Jarmu {
         if (utvonal != null) {
             Utszakasz cel = utvonal.getKivantUtszakasz();
             if (cel != null) {
-                utvonal.kovetkezoUtszakasz(cel);
+                jelenlegiUtszakasz.kovetkezoUtszakasz(cel);
                 boolean vegallomas = Skeleton.askYesNo("Elérte a végállomást?");
                 if (vegallomas && vezeto != null) {
                     vezeto.pontotKap();
@@ -26,7 +26,7 @@ public class Busz extends Jarmu {
     }
 
     @Override
-    public void utkozik() {
+    public void utkozes(Jarmu j2) {
         Skeleton.methodCalled(name + ".utkozik()");
         Skeleton.methodReturned();
     }

@@ -13,13 +13,7 @@ public class Utvonal {
         return cel;
     }
 
-    public Utszakasz kovetkezoUtszakasz(Utszakasz csonk) {
-        Skeleton.methodCalled(name + ".kovetkezoUtszakasz(" + (csonk != null ? csonk.getName() : "null") + ")");
-        boolean celElert = Skeleton.askYesNo("Elérte a célállomást?");
-        Utszakasz result = celElert ? null : cel;
-        Skeleton.methodReturned();
-        return result;
-    }
+    
 
     // Silent setter
     public void setCel(Utszakasz u) { this.cel = u; }
