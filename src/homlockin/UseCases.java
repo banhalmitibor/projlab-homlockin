@@ -2,6 +2,14 @@ package homlockin;
 
 import java.rmi.server.SkeletonMismatchException;
 
+/**
+ * A {@code UseCases} osztály a játék use case-eit (forgatókönyveit) valósítja meg
+ * a skeleton tesztelési módszertan szerint. Minden egyes metódus egy konkrét
+ * forgatókönyvet szimulál: hókotró közlekedést, takarítást különböző fejekkel,
+ * ütközéseket, vásárlásokat, buszvezetést és autó elakadást. Az osztály statikus
+ * mezőkben tárolja a teszteléshez szükséges objektumokat (város, játékosok,
+ * útszakaszok, járművek, hókotrófejek, csapadékok és bolt).
+ */
 public class UseCases {
     private static Varos v;
     private static TakaritoJatekos tj;
@@ -24,6 +32,11 @@ public class UseCases {
 
 
 
+    /**
+     * Hókotró sima közlekedése takarítás nélkül. A hókotró lép a következő
+     * útszakaszra, de nincs fej felszerelve, ezért takarítás nem történik.
+     * Csak hóesés és léptetés zajlik le.
+     */
     public static void runUseCase1() {
         String ucName = "Hókotró sima közlekedése (nincs takarítás)";
         Skeleton.startInit(ucName);
@@ -40,6 +53,10 @@ public class UseCases {
         Skeleton.methodReturned();*/
     }
 
+    /**
+     * Jégtörőfejjel való jégtörés forgatókönyve. A hókotró jégtörőfejjel közlekedik
+     * és a jégből jégtörmeléket csinál, amely hóként viselkedik tovább.
+     */
     static public void runUseCase2() {
         String ucName = "Jégtörőfejjel jégtörés";
         Skeleton.startInit(ucName);
@@ -53,6 +70,10 @@ public class UseCases {
     }
 
 
+    /**
+     * Hányófejjel való hó- és jégtörmelék takarítás forgatókönyve. A hókotró
+     * hányófejjel söpri el a havat az útszakaszról.
+     */
     public static void runUseCase3() {
         String ucName = "Takarít havat/jégtörmeléket hányófejjel";
         Skeleton.startInit(ucName);
@@ -65,6 +86,10 @@ public class UseCases {
         //Skeleton.methodReturned();
     }
 
+    /**
+     * Hókotró sima közlekedése sószórófejjel. A sószórófej sót szór az útszakaszra,
+     * ezzel olvasztja a havat és a jeget, illetve lassítja a hó újbóli lerakódását.
+     */
     public static void runUseCase4() {
         String ucName = "Hókotró sima közlekedése, sószórófejjel";
         Skeleton.startInit(ucName);
@@ -78,6 +103,10 @@ public class UseCases {
         //Skeleton.methodReturned();
     }
 
+    /**
+     * Hókotró sima közlekedése sárkányfejjel. A sárkányfej biokerozin égetésével
+     * azonnal elolvasztja a havat és a jégpáncélt az útszakaszról.
+     */
     public static void runUseCase5() {
         String ucName = "Hókotró sima közlekedése, sárkányfejjel";
         Skeleton.startInit(ucName);
@@ -87,6 +116,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Sószórófejjel való hó- és jégtörmelék takarítás forgatókönyve. A hókotró
+     * sót szór az útszakaszra, felolvasztva a havat és a jeget.
+     */
     public static void runUseCase6() {
         String ucName = "Takarít havat/jégtörmeléket sószórófejjel";
         Skeleton.startInit(ucName);
@@ -96,6 +129,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Sárkányfejjel való hó- és jégtörmelék takarítás forgatókönyve. A sárkányfej
+     * biokerozin égetésével azonnal olvasztja el a havat és a jégpáncélt.
+     */
     public static void runUseCase7() {
         String ucName = "Takarít havat/jégtörmeléket sárkányfejjel";
         Skeleton.startInit(ucName);
@@ -105,6 +142,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Hó és törött jég takarítás söprőfejjel. A söprőfej a havat áthelyezi a
+     * jobbra szomszédos sávba, vagy ha nincs, eltünteti az útszakaszról.
+     */
     public static void runUseCase8() {
         String ucName = "Hó és törött jég takarítás söprőfejjel";
         Skeleton.startInit(ucName);
@@ -115,6 +156,10 @@ public class UseCases {
     }
 
 
+    /**
+     * Só vásárlás és a hókotró sókészletének feltöltése a boltban. Ellenőrzi,
+     * hogy a takarító játékosnak van-e elegendő pénze a vásárláshoz.
+     */
     static void runUseCase9() {
         String ucName = "Só vásárlás és feltöltés";
         Skeleton.startInit(ucName);
@@ -124,6 +169,10 @@ public class UseCases {
         bolt.sotVasarol(tj, hk);
     }
 
+    /**
+     * Biokerozin vásárlás és a hókotró biokerozin készletének feltöltése a boltban.
+     * A biokerozint a sárkányfej használja a hó és jégpáncél olvasztásához.
+     */
     static void runUseCase10() {
         String ucName = "Biokerozin vásárlás és feltöltés";
         Skeleton.startInit(ucName);
@@ -133,6 +182,10 @@ public class UseCases {
         bolt.biokerozintVasarol(tj, hk);
     }
 
+    /**
+     * Hókotrófej vásárlása a boltban. A takarító játékos sószórófejet vásárol,
+     * ha elegendő pénze van rá.
+     */
     static void runUseCase11() {
         String ucName = "Hókotrófej vásárlása";
         Skeleton.startInit(ucName);
@@ -142,6 +195,10 @@ public class UseCases {
         bolt.hokotroFejetVasarol(tj, hk, "Soszoro");
     }
 
+    /**
+     * Új hókotró vásárlása a boltban. A takarító játékos az összegyűjtött
+     * pénzéből vesz egy új hókotró járművet.
+     */
     static void runUseCase12() {
         String ucName = "Új hókotró vásárlása";
         Skeleton.startInit(ucName);
@@ -151,6 +208,10 @@ public class UseCases {
         bolt.hokotrotVasarol(tj);
     }
     
+    /**
+     * Ütközés jégpáncélon forgatókönyv. Amikor egy autó jégpáncélos útszakaszon
+     * halad át, megcsúszik, és ha ütközés következik be, az útszakasz járhatatlanná válik.
+     */
     static void runUseCase13() {
         String ucName = "Ütközés jégpáncélon";
         Skeleton.startInit(ucName);
@@ -161,6 +222,10 @@ public class UseCases {
        
     }
 
+    /**
+     * Autó csúszkálása ütközés nélkül. Az autó jégpáncélos útszakaszon megcsúszik,
+     * de szabad a szomszédos útszakasz, így ütközés nélkül csúszik oda.
+     */
     static void runUseCase14() {
         String ucName = "Ütközés jégpáncélon";
         Skeleton.startInit(ucName);
@@ -172,6 +237,10 @@ public class UseCases {
         
     }
 
+    /**
+     * Hó letaposása és jégpáncél kialakulása. Az autók áthaladásukkor letapossák a havat,
+     * ami csökkenti a hó mennyiségét és növeli a jég szintjét az útszakaszon.
+     */
     static void runUseCase15() {
         String ucName = "Hó letaposása és jégpáncél";
         Skeleton.startInit(ucName);
@@ -181,6 +250,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Busz célba érése és pontszerzés forgatókönyve. Ha a busz sikeresen eléri
+     * valamelyik végállomást, a buszvezető játékos pontot kap.
+     */
     static void runUseCase16() {
         String ucName = "Busz célba érése és pontszerzés";
         Skeleton.startInit(ucName);
@@ -190,6 +263,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Város léptetése és havazás forgatókönyve. Egy lépés alatt az útszakaszokon
+     * hóesés következhet be, majd a járművek is lépnek a következő útszakaszra.
+     */
     static void runUseCase17() {
         String ucName = "Város léptetése és havazás";
         Skeleton.startInit(ucName);
@@ -199,6 +276,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Autó elakadása forgatókönyve. Ha az autó előtt lévő útszakasz járhatatlan
+     * (pl. magas hó miatt), az autó elakad és nem tud továbblépni.
+     */
     static void runUseCase18() {
         String ucName = "Autó elakadása";
         Skeleton.startInit(ucName);
@@ -208,6 +289,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Játék vége ellenőrzés forgatókönyve. Ellenőrzi, hogy az elakadt autók száma
+     * elérte-e a maximumot – ha igen, a játéknak vége és a buszvezető játékosok nyernek.
+     */
     static void runUseCase19() {
         String ucName = "Játék vége ellenőrzés";
         Skeleton.startInit(ucName);
@@ -217,6 +302,10 @@ public class UseCases {
         v.jatekVegeEllenorzes();
     }
 
+    /**
+     * Takarító játékos pénzszerzése hányófejjel való takarítással. A sikeresen
+     * letakarított útszakaszokért a takarító játékos pénzt kap.
+     */
     static void runUseCase20() {
         String ucName = "Takarító játékos pénzt szerez (Hányófej)";
         Skeleton.startInit(ucName);
@@ -226,6 +315,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Hókotrófej csere forgatókönyve. A takarító játékos lecseréli a hókotró
+     * fejét egy másik típusra a hatékonyabb takarítás érdekében.
+     */
     static void runUseCase21() {
         String ucName = "Hókotrófej csere";
         Skeleton.startInit(ucName);
@@ -237,6 +330,10 @@ public class UseCases {
         Skeleton.methodReturned();
     }
 
+    /**
+     * Autó célba érése forgatókönyve. Ha az autó eléri a munkahelyet vagy az otthont,
+     * sikeresen befejezi az útját és eltávolítják a városból.
+     */
     static void runUseCase22() {
         String ucName = "Autó célba érése";
         Skeleton.startInit(ucName);
@@ -246,6 +343,10 @@ public class UseCases {
         v.leptet();
     }
 
+    /**
+     * Hókotró félreállása és újraindulása. Ha a hókotró kifogy a nyersanyagból
+     * (só vagy biokerozin), félreáll, majd a következő lépésben újraindulhat.
+     */
     static void runUseCase23() {
         String ucName = "Hókotró félreáll és elindul";
         Skeleton.startInit(ucName);
@@ -258,6 +359,10 @@ public class UseCases {
 
     }
 
+    /**
+     * Busz indulása forgatókönyve. A buszvezető játékos beállítja a busz útvonalát,
+     * majd a busz elindul a két végállomás közötti úton.
+     */
     static void runUseCase24(){
         String ucName = "Busz indulása";
         Skeleton.startInit(ucName);
@@ -272,6 +377,11 @@ public class UseCases {
 
 
 
+    /**
+     * Inicializálás az 1. use case-hez: Hókotró sima közlekedése söprőfejjel.
+     * Létrehozza a várost, a takarító játékost, két útszakaszt és a hókotró járművet
+     * felszerelt söprőfejjel.
+     */
     public static void init1(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -298,6 +408,11 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    /**
+     * Inicializálás a 2. és 4. use case-hez: Hókotró sima közlekedése sószórófejjel.
+     * Létrehozza a várost, a takarító játékost, egy útszakaszt és a hókotró járművet
+     * felszerelt sószórófejjel.
+     */
     public static void init2(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -322,6 +437,11 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    /**
+     * Inicializálás az 5. use case-hez: Hókotró sima közlekedése sárkányfejjel.
+     * Létrehozza a várost, a takarító játékost, egy útszakaszt és a hókotró járművet
+     * felszerelt sárkányfejjel.
+     */
     public static void init3(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -346,6 +466,11 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    /**
+     * Inicializálás a 8. use case-hez: Hó és törött jég takarítás söprőfejjel.
+     * Létrehozza a várost, két útszakaszt hóval és jéggel, valamint a hókotró
+     * járművet söprőfejjel.
+     */
     public static void init4(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -383,6 +508,11 @@ public class UseCases {
         v.addJarmu(hk);
     }
 
+    /**
+     * Inicializálás a 3. és 20. use case-hez: Hányófejjel való takarítás.
+     * Létrehozza a várost, egy útszakaszt hóval és jéggel, valamint a hókotró
+     * járművet felszerelt hányófejjel.
+     */
     public static void init5(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -415,6 +545,11 @@ public class UseCases {
         v.addJarmu(hk);
     }
 
+    /**
+     * Inicializálás a 6. és 23. use case-hez: Sószórófejjel való takarítás.
+     * Létrehozza a várost, egy útszakaszt hóval és jéggel, valamint a hókotró
+     * járművet sószórófejjel.
+     */
     public static void init6(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -447,6 +582,11 @@ public class UseCases {
         v.addJarmu(hk);
     }
 
+    /**
+     * Inicializálás a 7. use case-hez: Sárkányfejjel való takarítás.
+     * Létrehozza a várost, egy útszakaszt hóval és jéggel, valamint a hókotró
+     * járművet felszerelt sárkányfejjel.
+     */
     public static void init7(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -478,6 +618,11 @@ public class UseCases {
         v.addJarmu(hk);
     }
 
+    /**
+     * Inicializálás a 2. use case-hez: Jégtörőfejjel jégtörés.
+     * Létrehozza a várost, egy útszakaszt jéggel, valamint a hókotró
+     * járművet jégtörőfejjel.
+     */
     public static void init8(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -504,6 +649,11 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    /**
+     * Inicializálás a 17., 18. és 19. use case-hez: Város léptetés, autó elakadás,
+     * játék vége. Létrehozza a várost, két útszakaszt hóval és jéggel, és egy
+     * autót útvonallal.
+     */
     public static void init9(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -539,6 +689,11 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    /**
+     * Inicializálás a 16. és 24. use case-hez: Busz célba érés és busz indulás.
+     * Létrehozza a várost, a buszvezető játékost, a busz járművet, két útszakaszt
+     * és az útvonalat.
+     */
     public static void init10(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -566,6 +721,11 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    /**
+     * Inicializálás a 9., 10., 11. és 12. use case-hez: Boltban való vásárlások.
+     * Létrehozza a várost, a boltot, a takarító játékost, a hókotró járművet
+     * és egy söprőfejet.
+     */
     public static void init11(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -584,6 +744,11 @@ public class UseCases {
         tj.setBolt(bolt);
     }
 
+    /**
+     * Inicializálás a 15. és 22. use case-hez: Hó letaposás, jégpáncél és autó célba
+     * érése. Létrehozza a várost, egy autót, két útszakaszt hóval és jéggel,
+     * valamint útvonallal.
+     */
     public static void init12(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -623,6 +788,11 @@ public class UseCases {
         v.addUtszakasz(u1);
     }
 
+    /**
+     * Inicializálás a 13. és 14. use case-hez: Ütközés jégpáncélon.
+     * Létrehozza a várost, három útszakaszt, két autót, jéggel felszerelt útszakaszt
+     * és útvonalat. Az egyik autó a másikba ütközik csúszás közben.
+     */
     public static void init14(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -661,6 +831,11 @@ public class UseCases {
         v.addJarmu(j1);
     }
 
+    /**
+     * Az összes statikus tesztelési mezőt null-ra állítja, hogy a következő
+     * inicializálás előtt tiszta állapot legyen. Ez szükséges a tesztek
+     * izolálásához és az objektumok megfelelő újralétrehozásához.
+     */
     public static void setToNull(){
         v = null;
         tj = null;
