@@ -9,6 +9,7 @@ public class UseCases {
     private static Hokotro hk;
     private static HokotroFej fej;
     private static Jeg jeg1;
+    private static Jeg jeg2;
     private static Ho ho1;
     private static Ho ho2;
     private static Bolt bolt;
@@ -152,22 +153,7 @@ public class UseCases {
 
         Skeleton.startTest(ucName);
         v.leptet();
-        /*
-        Skeleton.methodCalled("v.leptet()");
-        Skeleton.methodCalled("erkezoJarmu.lep()");
-        Skeleton.methodCalled("erkezoJarmu.csuszkal()");
-        boolean csuszikJegpancelen = Skeleton.askYesNo("Jégpáncélon csúszik?");
-        if (csuszikJegpancelen) {
-            uJelenlegi.csuszvaKovetkezoUtszakasz();
-            boolean vanJarmu = Skeleton.askYesNo("Van jármű a célállomáson?");
-            if (vanJarmu) {
-                erkezoJarmu.utkozik();
-                szomszedosJarmu.utkozik();
-            }
-        }
-        Skeleton.methodReturned(); // csuszkal
-        Skeleton.methodReturned(); // lep
-        Skeleton.methodReturned(); // leptet*/
+       
     }
 
     static void runUseCase14() {
@@ -178,22 +164,16 @@ public class UseCases {
 
         Skeleton.startTest(ucName);
         v.leptet();
-        /*
-        Skeleton.methodCalled("v.leptet()");
-        Skeleton.methodCalled("erkezoJarmu.lep()");
-        Skeleton.methodCalled("erkezoJarmu.csuszkal()");
-        boolean csuszikJegpancelen = Skeleton.askYesNo("Jégpáncélon csúszik?");
-        if (csuszikJegpancelen) {
-            uJelenlegi.csuszvaKovetkezoUtszakasz();
-            boolean vanJarmu = Skeleton.askYesNo("Van jármű a célállomáson?");
-            if (vanJarmu) {
-                erkezoJarmu.utkozik();
-                szomszedosJarmu.utkozik();
-            }
-        }
-        Skeleton.methodReturned(); // csuszkal
-        Skeleton.methodReturned(); // lep
-        Skeleton.methodReturned(); // leptet*/
+        
+    }
+
+    static void runUseCase15() {
+        String ucName = "Hó letaposása és jégpáncél";
+        Skeleton.startInit(ucName);
+        init12();
+
+        Skeleton.startTest(ucName);
+        v.leptet();
     }
 
 
@@ -433,6 +413,44 @@ public class UseCases {
         tj.setBolt(bolt);
     }
 
+    public static void init12(){
+        Skeleton.printNew("Varos");
+        v = new Varos("v");
+        Skeleton.printNew("Auto");
+        j1 = new Auto("a");
+        Skeleton.printNew("Utszakasz");
+        u1 = new Utszakasz("uJelenlegi");
+        Skeleton.printNew("Utszakasz");
+        u2 = new Utszakasz("uCel");
+        Skeleton.printNew("Ho");
+        ho1 = new Ho("ho");
+        Skeleton.printNew("Jeg");
+        jeg1 = new Jeg("jeg");
+        Skeleton.printNew("Ho");
+        ho2 = new Ho("hoCel");
+        Skeleton.printNew("Jeg");
+        jeg2 = new Jeg("jegCel");
+        Skeleton.printNew("Utvonal");
+        utvonal = new Utvonal("u");
+        Skeleton.printInitCall("uJelenlegi.setHo(ho)");
+        u1.setHo(ho1);
+        Skeleton.printInitCall("uJelenlegi.setJeg(jeg)");
+        u1.setJeg(jeg1);
+        Skeleton.printInitCall("uCel.setHo(hoCel)");
+        u2.setHo(ho2);
+        Skeleton.printInitCall("uCel.setJeg(jegCel)");
+        u2.setJeg(jeg2);
+        Skeleton.printInitCall("uJelenlegi.addKovetkezo(uCel)");
+        u1.addKovetkezo(u2);
+        Skeleton.printInitCall("a.setUtvonal(utvonal)");
+        j1.setUtvonal(utvonal);
+        j1.setJelenlegiUtszakasz(u1);
+        Skeleton.printInitCall("utvonal.setCel(uCel)");
+        utvonal.setCel(u2);
+        v.addJarmu(j1);
+        v.addUtszakasz(u1);
+    }
+
     public static void init14(){
         setToNull();
         Skeleton.printNew("Varos");
@@ -480,6 +498,7 @@ public class UseCases {
         hk = null;
         fej = null;
         jeg1 = null;
+        jeg2 = null;
         ho1 = null;
         ho2 = null;
         bolt = null;

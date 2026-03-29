@@ -58,8 +58,8 @@ public class Main {
                 case 11: UseCases.runUseCase11(); break;
                 case 12: UseCases.runUseCase12(); break;
                 case 13: UseCases.runUseCase13(); break; 
-                case 14: UseCases.runUseCase14(); break;/*
-                case 15: runUseCase15(); break;
+                case 14: UseCases.runUseCase14(); break;
+                case 15: UseCases.runUseCase15(); break;/*
                 case 16: runUseCase16(); break;
                 case 17: runUseCase17(); break;
                 case 18: runUseCase18(); break;

@@ -21,7 +21,7 @@ public class Auto extends Jarmu {
                     else{
                         this.setJelenlegiUtszakasz(kovetkezo);
                         kovetkezo.stepOn(this);
-                        
+                        jelenlegiUtszakasz.letapos();
                     }
                 }
             }
