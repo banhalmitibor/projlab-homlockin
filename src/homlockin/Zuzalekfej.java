@@ -1,15 +1,15 @@
 package homlockin;
 
-public class Sarkanyfej implements HokotroFej {
+public class Zuzalekfej implements HokotroFej {
     private Hokotro hokotro;
 
     @Override
-    public String getName() { return "sarkany"; }
+    public String getName() { return "zuzalek"; }
 
     @Override
     public void munkatVegez(Utszakasz szakasz) {
-        if (hokotro != null && hokotro.biokerozinFogyasztas(1)) {
-            szakasz.olvasztas();
+        if (hokotro != null && hokotro.zuzalekFogyasztas(1)) {
+            szakasz.zuzalekSzoras(); 
         }
     }
 

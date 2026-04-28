@@ -1,68 +1,37 @@
 package homlockin;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Az {@code Utvonal} osztály kezeli az egyes járművek haladásának útvonalát.
- * Eltárolja, hogy hova megy a jármű (célállomás), és ennek megfelelően meghatározza
- * a haladási útvonalat. A jármű le tudja kérdezni tőle, hogy melyik útszakaszon
- * folytassa az útját a célállomás felé. Segít eldönteni, hogy az adott jármű merre
- * haladjon tovább a kereszteződésekben.
- */
 public class Utvonal {
+    private List<Utszakasz> utvonalatKeres;
+    private int currentIndex = 0;
 
-    /** Az útvonal neve azonosítási célokra. */
-    private String name;
-
-    /** Az útszakaszok listája, amelyeken a jármű halad a célállomás felé. */
-    private List<Utszakasz> vonal;
-
-    /** Az a célállomás, ahova a jármű el kíván jutni. */
-    private Utszakasz cel;
-
-    /**
-     * Alapértelmezett konstruktor. Létrehoz egy névtelen útvonal objektumot.
-     */
-    public Utvonal() {}
-
-    /**
-     * Névvel ellátott útvonal objektumot hoz létre.
-     *
-     * @param name az útvonal neve
-     */
-    public Utvonal(String name) { this.name = name; }
-
-    /**
-     * Visszaadja a következő útszakaszt a célállomás felé. A jármű ezt hívja meg,
-     * hogy megtudja, melyik útszakaszra lépjen következőnek a célállomás irányába.
-     *
-     * @return a következő {@link Utszakasz} a célállomás felé, vagy {@code null},
-     *         ha nincs meghatározott célállomás
-     */
-    public Utszakasz getKivantUtszakasz() {
-        Skeleton.methodCalled(name + ".getKivantUtszakasz()");
-        Skeleton.methodReturned();
-        return cel;
+    public Utvonal() {
+        this.utvonalatKeres = new ArrayList<>();
     }
 
-    /**
-     * Beállítja az útvonal célállomását.
-     *
-     * @param u a célállomásként beállítandó {@link Utszakasz} objektum
-     */
-    public void setCel(Utszakasz u) { this.cel = u; }
+    public void addUtszakasz(Utszakasz u) {
+        this.utvonalatKeres.add(u);
+    }
 
-    /**
-     * Visszaadja az útvonal célállomását.
-     *
-     * @return a célállomás {@link Utszakasz} objektuma
-     */
-    public Utszakasz getCel() { return cel; }
+    public Utszakasz getKivantUtszakasz() {
+        if (currentIndex < utvonalatKeres.size()) {
+            return utvonalatKeres.get(currentIndex);
+        }
+        return null;
+    }
+    
+    public void leptet() {
+        currentIndex++;
+    }
 
-    /**
-     * Visszaadja az útvonal nevét.
-     *
-     * @return az útvonal neve
-     */
-    public String getName() { return name; }
+    public boolean isVege() {
+        return currentIndex >= utvonalatKeres.size();
+    }
+    
+    public void clear() {
+        this.utvonalatKeres.clear();
+        this.currentIndex = 0;
+    }
 }

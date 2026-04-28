@@ -1,119 +1,91 @@
 package homlockin;
 
-/**
- * Az {@code Auto} osztály egy járművet modellez, amely egy otthon és egy munkahely
- * között tud haladni a legrövidebb lehetséges módon. Ha minden út a két helyszín
- * között járhatatlan, vagy ha a közlekedés során az út, amin haladna, járhatatlanná
- * válik, az autó elakad. Ha egy szomszédos sáv mégis járhatóvá válik (pl. a hókotró
- * letakarítja), az autó képes sávot váltani. Az {@link Jarmu} absztrakt osztályból
- * származik le.
- */
 public class Auto extends Jarmu {
+    private boolean utkozott;
 
-    /** Jelzi, hogy az autó el van-e akadva (pl. magas hó vagy járhatatlan útszakasz miatt). */
-    private boolean elakadva;
+    public Auto(String id) {
+        super(id);
+        this.utkozott = false;
+    }
 
-    /**
-     * Alapértelmezett konstruktor. Létrehoz egy névtelen autót.
-     */
-    public Auto() {}
-
-    /**
-     * Névvel ellátott autót hoz létre.
-     *
-     * @param name az autó neve
-     */
-    public Auto(String name) { this.name = name; }
-
-    /**
-     * A következő útszakaszra lépteti az autót az útvonal alapján. Ha a következő
-     * útszakasz járhatatlan (pl. magas hó miatt), az autó elakad. Ha a célállomásra
-     * ért, eltávolítható az útszakaszról. Az autó áthaladáskor letapossa a havat,
-     * ami jégpáncél kialakulásához vezethet.
-     */
     @Override
     public void lep() {
-        Skeleton.methodCalled(name + ".lep()");
-        if (utvonal != null) {
-            Utszakasz cel = utvonal.getKivantUtszakasz();
-            if (cel != null) {
-                Utszakasz kovetkezo = jelenlegiUtszakasz.kovetkezoUtszakasz(cel);
-                if (kovetkezo != null) {
-                    boolean jarhatoE = kovetkezo.jarhato();
-                    if (!jarhatoE) {
-                        elakadva = true;
-                    }
-                    else{
-                        this.setJelenlegiUtszakasz(kovetkezo);
-                        kovetkezo.stepOn(this);
-                        jelenlegiUtszakasz.letapos();
-                    }
-                }
+        if (utkozott) return;
+
+        Utszakasz kov = utvonala.getKivantUtszakasz();
+        if (kov == null) {
+            // Célba ért, lekerül a pályáról
+            if (this.allRajta != null) {
+                this.allRajta.setJarmu(null);
+                this.allRajta = null;
             }
-        } /*else if (jelenlegiUtszakasz != null) {
-            boolean jarhatoE = jelenlegiUtszakasz.jarhato();
-            if (!jarhatoE) {
-                elakadva = true;
-            }
-        }*/
+            return;
+        }
+
+        if (!kov.jarhato()) {
+            // Elakad vagy várakozik, nem csúszik meg, nem lép
+            return;
+        }
+
+        Utszakasz regi = allRajta;
+        // Lép
+        if (regi != null) {
+            regi.setJarmu(null);
+        }
+        allRajta = kov;
+        allRajta.setJarmu(this);
         
-        Skeleton.methodReturned();
+        leptetUtvonal();
+        
+        // Letaposás
+        if (regi != null) {
+            regi.letapos();
+        }
+
+        // Megcsúszás ellenőrzése új mezőn
+        if (allRajta != null && allRajta.getJeg() != null && allRajta.getJeg().jegPancel()) {
+            this.csuszkal();
+        }
     }
 
-    /**
-     * Kezeli az autó megcsúszását jégpáncélos útszakaszon. Ha a csúszás irányában
-     * egy másik jármű áll, ütközés következik be, és mindkét érintett útszakasz
-     * járhatatlanná válik. Ha szabad az útszakasz, az autó oda csúszik.
-     */
     @Override
     public void csuszkal() {
-        Skeleton.methodCalled(name + ".csuszkal()");
-        //boolean utkozesVan = Skeleton.askYesNo("Ütközés van?");
-        Utszakasz csuszkalvaKov = jelenlegiUtszakasz.csuszvaKovetkezoUtszakasz();
-        Jarmu szomJarmu = csuszkalvaKov.getJarmu();
-        if (szomJarmu !=null) {
-            szomJarmu.utkozes(this);
-            utkozes(szomJarmu);
+        Utvonal u = getUtvonala();
+        Utszakasz slipTo = u.getKivantUtszakasz();
+        if(slipTo == null){
+            slipTo = allRajta.csuszvaKovetkezoUtszakasz();
         }
-        else {
-            jelenlegiUtszakasz = csuszkalvaKov;
-
-            csuszkalvaKov.setJarmu(this);
-            Skeleton.methodCalled(csuszkalvaKov.getName()+".setJarmu()");
-            Skeleton.methodReturned();
+        
+        if (slipTo != null) {
+            if (!slipTo.jarhato()) {
+                // ütközött állapot
+                this.utkozik();
+                if (slipTo.getJarmu() != null) {
+                    slipTo.getJarmu().utkozik();
+                }
+            } else {
+                // Sikeresen átcsúszik
+                Utszakasz regi = allRajta;
+                if (regi != null) {
+                    regi.setJarmu(null);
+                }
+                allRajta = slipTo;
+                allRajta.setJarmu(this);
+                leptetUtvonal();
+                if (regi != null) {
+                    regi.letapos();
+                }
+            }
         }
-        Skeleton.methodReturned();
     }
 
-    /**
-     * Kezeli az ütközés következményeit. Amikor két autó vagy egy busz és egy autó
-     * összeütközik egy csúszós útszakaszon, az adott útszakaszokat, ahol álltak,
-     * le kell zárni – járhatatlanná válnak.
-     *
-     * @param j2 az a másik jármű, amellyel az ütközés bekövetkezett
-     */
     @Override
-    public void utkozes(Jarmu j2) {
-        Skeleton.methodCalled(name + ".utkozik()");
-        if (jelenlegiUtszakasz != null) {
-            jelenlegiUtszakasz.jarhatatlannaValik();
+    public void utkozik() {
+        this.utkozott = true;
+        if (this.allRajta != null) {
+            this.allRajta.jarhatatlannaValik();
         }
-        Skeleton.methodReturned();
     }
-
-    /**
-     * Visszaadja, hogy az autó el van-e akadva. Az autó elakad, ha minden út
-     * a két helyszín között járhatatlan, vagy ha a közlekedés során az út,
-     * amin haladna, járhatatlanná válik.
-     *
-     * @return {@code true}, ha az autó el van akadva; {@code false} egyébként
-     */
-    public boolean getElakadva() {
-        Skeleton.methodCalled(name + ".getElakadva()");
-        boolean result = Skeleton.askYesNo("El van akadva az autó?");
-        Skeleton.methodReturned();
-        return result;
-    }
-
     
+    public boolean isUtkozott() { return utkozott; }
 }
