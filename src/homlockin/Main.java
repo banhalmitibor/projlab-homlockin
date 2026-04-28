@@ -20,6 +20,8 @@ public class Main {
         
         System.out.println("Homlockin Hokotro Szimulator Tesztkonzol");
         System.out.println("A kilepeshez ird: exit");
+        System.out.println("A tesztek futtatásához írd: test");
+        System.out.println("Specifikus teszt futtatásához: test 1 vagy test 2");
         
         while (true) { 
             System.out.print("> ");
@@ -53,7 +55,18 @@ public class Main {
                     bolt = new Bolt();
                     System.out.println("A varos inicializalva.");
                     break;
-                    
+                
+                case "test":
+                    // Tesztek futtatása
+                    if (parts.length == 1) {
+                        tests.RunTests.runTest(new String[0]);
+                    } else {
+                        String[] testArgs = new String[parts.length - 1];
+                        System.arraycopy(parts, 1, testArgs, 0, parts.length - 1);
+                        tests.RunTests.runTest(testArgs);
+                    }
+                    break;
+                
                 case "add":
                     handleAdd(parts);
                     break;
