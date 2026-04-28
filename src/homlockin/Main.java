@@ -21,7 +21,7 @@ public class Main {
         System.out.println("Homlockin Hokotro Szimulator Tesztkonzol");
         System.out.println("A kilepeshez ird: exit");
         
-        while (true) {
+        while (true) { 
             System.out.print("> ");
             if (!scanner.hasNextLine()) break;
             
