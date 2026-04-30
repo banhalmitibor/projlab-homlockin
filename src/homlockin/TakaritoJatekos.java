@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TakaritoJatekos extends Jatekos {
     private List<Hokotro> vezeti;
-    private Bolt bolt;
+    private Bolt vasarol;
     private int penz;
 
     public TakaritoJatekos(String nev) {
@@ -21,7 +21,7 @@ public class TakaritoJatekos extends Jatekos {
     }
 
     public void setBolt(Bolt bolt) {
-        this.bolt = bolt;
+        this.vasarol = bolt;
     }
 
     public int getPenz() { return penz; }

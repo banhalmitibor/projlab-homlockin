@@ -41,9 +41,7 @@ public class Utszakasz {
         }
     }
 
-    public Utszakasz kovetkezoUtszakasz(Utszakasz cel) {
-        // Alapértelmezett viselkedés: első a listából (a tényleges útvonal algoritmus külső lenne,
-        // de az egyszerűség kedvéért és a tesztek miatt a jármű majd kezeli az utvonalát).
+    public Utszakasz kovetkezoUtszakasz() {
         if (!kovetkezok.isEmpty()) {
             return kovetkezok.get(0);
         }
@@ -66,10 +64,6 @@ public class Utszakasz {
         return true;
     }
 
-    public void stepOn(Jarmu j) {
-        // Ha jégpáncél van, a jármű csúszik. Ezt a jármű osztály lekezeli.
-    }
-
     public void setJarmu(Jarmu j) { 
         this.jarmu = j; 
     }
@@ -80,40 +74,47 @@ public class Utszakasz {
 
     public void hoLesopres() {
         ho.eltakarit();
-        jeg.eltakarit();
+        zuzalek.eltakarit();
+        if (jeg.isFeltort()) {
+            jeg.eltakarit();
+        }
     }
 
-    public void hoRasopres() {
-        ho.novel(1);
+    public void hoRasopres(int amount) {
+        ho.novel(amount);
     }
     
     public void zuzalekSzoras() {
         zuzalek.novel(1);
     }
     
-    public void zuzalekRasopres() {
-        zuzalekSzoras();
+    public void zuzalekRasopres(int amount) {
+        zuzalek.novel(amount);
     }
 
     public void jegTores() {
         if (jeg.getMennyiseg() > 0) {
             jeg.jegetTor();
-            // a feltört jég hóként viselkedik
         }
     }
 
     public void soSzoras() {
-        ho.felsoz();
-        jeg.felsoz();
+        if (ho.getMennyiseg() > 0) {
+            ho.csokkent(2);
+        }
+        if (jeg.getMennyiseg() > 0 && !jeg.isFeltort()) {
+            jeg.csokkent(1);
+        }
     }
 
     public void olvasztas() {
         ho.eltakarit();
         jeg.eltakarit();
+        // Zúzalék megmarad sárkányfejnél spec szerint
     }
 
     public void letapos() {
-        if (ho.getMennyiseg() > 0) {
+        if (ho.getMennyiseg() > 0 && ho.getMennyiseg() < 4) {
             ho.csokkent(1);
             jeg.novel(1);
         }

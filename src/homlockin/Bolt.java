@@ -24,30 +24,30 @@ public class Bolt {
         return null;
     }
 
-    public void sotVasarol(TakaritoJatekos j, Hokotro hk) {
-        if (j.getPenz() >= 10) {
-            j.penztLevon(10);
+    public void sotVasarol(Hokotro hk) {
+        if (vasarol != null && vasarol.getPenz() >= 10) {
+            vasarol.penztLevon(10);
             hk.soFeltoltes();
         }
     }
 
-    public void zuzalekotVasarol(TakaritoJatekos j, Hokotro hk) {
-        if (j.getPenz() >= 10) {
-            j.penztLevon(10);
+    public void zuzalekotVasarol(Hokotro hk) {
+        if (vasarol != null && vasarol.getPenz() >= 10) {
+            vasarol.penztLevon(10);
             hk.zuzalekFeltoltes();
         }
     }
 
-    public void biokerozinVasarol(TakaritoJatekos j, Hokotro hk) {
-        if (j.getPenz() >= 10) {
-            j.penztLevon(10);
+    public void biokerozinVasarol(Hokotro hk) {
+        if (vasarol != null && vasarol.getPenz() >= 10) {
+            vasarol.penztLevon(10);
             hk.biokerozinFeltoltes();
         }
     }
 
-    public void hokotroFejetVasarol(TakaritoJatekos j, Hokotro hk, HokotroFej fejTipus) {
-        if (j.getPenz() >= 50) {
-            j.penztLevon(50);
+    public void hokotroFejetVasarol(Hokotro hk, HokotroFej fejTipus) {
+        if (vasarol != null && vasarol.getPenz() >= 50) {
+            vasarol.penztLevon(50);
             hk.fejetCserel(fejTipus);
         }
     }

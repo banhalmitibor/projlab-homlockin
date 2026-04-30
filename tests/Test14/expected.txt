@@ -1,6 +1,6 @@
-tj1 910 hk1
+tj1 905 hk1
 	hk1 sopro 0 0 0
-a - :
-b car1 : ho5
+a car1 :
+b - :
 c hk1 :
 d - :

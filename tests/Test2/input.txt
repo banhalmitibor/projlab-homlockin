@@ -1,4 +1,4 @@
-init test2_palya.txt
+init palya.txt
 add -tj tj1
 buy -hk hk1 tj1 a
 route hk1 b c d e f
@@ -7,4 +7,4 @@ step
 step
 step
 step
-save test2_expected.txt
+save expected.txt

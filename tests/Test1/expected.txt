@@ -1,4 +1,4 @@
-tj1 850 hk1
+tj1 870 hk1
 	hk1 hanyo 0 0 0
 a - :
 b - :

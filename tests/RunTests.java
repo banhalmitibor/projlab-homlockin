@@ -16,14 +16,15 @@ public class RunTests {
         int numTests = 25;
         
         for (int i = 1; i <= numTests; i++) {
-            String palya = "test" + i + "_palya.txt";
-            String teszt = "test" + i + "_teszt.txt";
-            String expected = "test" + i + "_expected.txt";
+            String dir = "tests/Test" + i + "/";
+            String palya = dir + "palya.txt";
+            String teszt = dir + "input.txt";
+            String expected = dir + "expected.txt";
             
             System.out.println("Running test " + i + "...");
             
-            if (!new File("tests/" + palya).exists()) {
-                System.out.println("Test " + i + " output files missing.");
+            if (!new File(palya).exists()) {
+                System.out.println("Test " + i + " output files missing at " + palya);
                 continue;
             }
             
@@ -43,7 +44,7 @@ public class RunTests {
             PrintStream old = System.out;
             
             try {
-                Scanner sc = new Scanner(new File("tests/" + teszt));
+                Scanner sc = new Scanner(new File(teszt));
                 while (sc.hasNextLine()) {
                     String cmd = sc.nextLine().trim();
                     if (!cmd.isEmpty() && !cmd.startsWith("#")) {
@@ -66,10 +67,10 @@ public class RunTests {
                 }
                 sc.close();
                 
-                String actualOut = baos.toString().trim().replace("\r\n", "\n").replaceAll("(?m)^\\s+$", ""); // remove trailing spaces
-                String expOut = new String(Files.readAllBytes(Paths.get("tests/" + expected))).trim().replace("\r\n", "\n").replaceAll("(?m)^\\s+$", "");
+                String actualOut = baos.toString();
+                String expOut = new String(Files.readAllBytes(Paths.get(expected)));
                 
-                if (actualOut.equals(expOut)) {
+                if (normalize(actualOut).equals(normalize(expOut))) {
                     passed++;
                     System.out.println("  PASSED");
                 } else {
@@ -85,6 +86,10 @@ public class RunTests {
         }
         
         System.out.println(passed + "/" + numTests + " tests passed.");
+    }
+
+    private static String normalize(String s) {
+        return s.trim().replace("\r\n", "\n").replaceAll("\\s+", " ");
     }
     
     public static void main(String[] args) {

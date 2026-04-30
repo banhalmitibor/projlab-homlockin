@@ -8,7 +8,7 @@ public class TestParser {
 
     public static void loadPalya(String filename) {
         try {
-            Scanner sc = new Scanner(new File("tests/" + filename));
+            Scanner sc = new Scanner(new File(filename));
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 if (line.isEmpty() || line.startsWith("#")) continue;
@@ -33,7 +33,7 @@ public class TestParser {
             sc.close();
             
             // Masodik kor az osszekottetesekhez
-            sc = new Scanner(new File("tests/" + filename));
+            sc = new Scanner(new File(filename));
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 if (line.isEmpty() || line.startsWith("#")) continue;
@@ -72,7 +72,7 @@ public class TestParser {
                             int val = Integer.parseInt(sz.substring(3, 4));
                             boolean feltort = sz.endsWith("t");
                             Jeg jeg = new Jeg(u); jeg.setMennyiseg(val);
-                            if (feltort) jeg.jegetTor();
+                            if (feltort) jeg.setFeltort(true);
                             u.setJeg(jeg);
                         } else if (sz.startsWith("zuzalek")) {
                             Zuzalek z = new Zuzalek(u); z.setMennyiseg(1);

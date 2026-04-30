@@ -19,10 +19,6 @@ public class Busz extends Jarmu {
 
         Utszakasz kov = utvonala.getKivantUtszakasz();
         if (kov == null) {
-            // Reached destination for current route
-            if (vezeti != null) {
-                vezeti.pontotKap(5); // Pontot kap a célbaérésért
-            }
             return; 
         }
 
@@ -39,6 +35,10 @@ public class Busz extends Jarmu {
         allRajta.setJarmu(this);
         
         leptetUtvonal();
+        
+        if (vezeti != null && (allRajta == vezeti.getVegallomas1() || allRajta == vezeti.getVegallomas2())) {
+            vezeti.pontotKap();
+        }
 
         if (allRajta != null && allRajta.getJeg() != null && allRajta.getJeg().jegPancel()) {
             this.csuszkal();

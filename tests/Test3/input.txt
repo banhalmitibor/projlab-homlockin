@@ -1,8 +1,8 @@
-init test3_palya.txt
+init palya.txt
 add -tj tj1
 buy -hk hk1 tj1 a
 buy -fej hk1 jegtoro
 swap hk1 jegtoro
 route hk1 b
 step
-save test3_expected.txt
+save expected.txt

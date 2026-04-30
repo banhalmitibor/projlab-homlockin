@@ -1,5 +1,5 @@
-init test23_palya.txt
+init palya.txt
 add -tj tj1
 buy -hk hk1 tj1 a
 buy -kerozin hk1
-save test23_expected.txt
+save expected.txt

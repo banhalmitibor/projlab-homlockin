@@ -1,4 +1,4 @@
-init test1_palya.txt
+init palya.txt
 add -tj tj1
 buy -hk hk1 tj1 a
 buy -fej hk1 hanyo
@@ -8,4 +8,4 @@ step
 step
 step
 step
-save test1_expected.txt
+save expected.txt

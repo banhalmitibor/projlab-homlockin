@@ -8,21 +8,23 @@ public class Soprofej implements HokotroFej {
 
     @Override
     public void munkatVegez(Utszakasz szakasz) {
-        szakasz.hoLesopres(); // this will also do the right shift inside Utszakasz, wait! Actually the Utszakasz methods say: "hoLesopres(): eltünteti az útszakaszról", "hoRasopres()": rásöpri a havat. 
-        // Wait, how does it move it right? It's better if Soprofej gets the right section and pushes it.
         Utszakasz jobb = szakasz.getJobbraLevoSzakasz();
-        // Read snow, zuza amount
-        int snow = (szakasz.getHo() != null) ? szakasz.getHo().getMennyiseg() : 0;
-        boolean hasZuz = (szakasz.getZuzalek() != null && szakasz.getZuzalek().vanZuzalek());
         
-        szakasz.hoLesopres(); 
+        // Először megnézzük van-e hó vagy zúzalék amit söpörhetünk
+        int hoMennyiseg = (szakasz.getHo() != null) ? szakasz.getHo().getMennyiseg() : 0;
+        int zuzMennyiseg = (szakasz.getZuzalek() != null && szakasz.getZuzalek().vanZuzalek()) ? 1 : 0;
+        int jegMennyiseg = (szakasz.getJeg() != null && szakasz.getJeg().isFeltort()) ? szakasz.getJeg().getMennyiseg() : 0;
+
+        // Lesöpörjük az aktuális szakaszról
+        szakasz.hoLesopres();
         
+        // Ha van jobbra szakasz, rásöpörjük
         if (jobb != null) {
-            for (int i=0; i<snow; i++) {
-                jobb.hoRasopres();
-            }
-            if (hasZuz) {
-                jobb.zuzalekRasopres();
+            if (hoMennyiseg > 0) jobb.hoRasopres(hoMennyiseg);
+            if (zuzMennyiseg > 0) jobb.zuzalekRasopres(zuzMennyiseg);
+            if (jegMennyiseg > 0) {
+                jobb.getJeg().novel(jegMennyiseg);
+                jobb.getJeg().setFeltort(true);
             }
         }
     }

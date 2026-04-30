@@ -1,13 +1,13 @@
 tj1 925 hk1
 	hk1 sopro 0 0 0
 a - :
+aa - :
 b - :
-c - : jeg3
-d - :
-e - : 
-aa - : 
 bb - : ho3
+c - : jeg3
 cc - :
+d - :
 dd - : jeg3t
+e - :
 ee - : zuzalek
 f hk1 :

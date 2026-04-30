@@ -1,7 +1,7 @@
-init test11_palya.txt
+init palya.txt
 add -bj bj1 a d
 route bj1 b c d
 step
 step
 step
-save test11_expected.txt
+save expected.txt

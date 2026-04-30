@@ -11,40 +11,41 @@ public class Auto extends Jarmu {
     @Override
     public void lep() {
         if (utkozott) return;
+        if (allRajta != null && allRajta.getHo().getMennyiseg() >= 4) {
+            return; // Stuck
+        }
 
         Utszakasz kov = utvonala.getKivantUtszakasz();
         if (kov == null) {
-            // Célba ért, lekerül a pályáról
-            if (this.allRajta != null) {
-                this.allRajta.setJarmu(null);
-                this.allRajta = null;
-            }
+            checkCélbaérés();
             return;
         }
 
-        if (!kov.jarhato()) {
-            // Elakad vagy várakozik, nem csúszik meg, nem lép
-            return;
+        if (kov.getJarmu() != null || kov.getHo().getMennyiseg() >= 4) {
+            return; // Wait or Stop Before
         }
 
         Utszakasz regi = allRajta;
-        // Lép
         if (regi != null) {
             regi.setJarmu(null);
         }
         allRajta = kov;
         allRajta.setJarmu(this);
-        
         leptetUtvonal();
-        
-        // Letaposás
-        if (regi != null) {
-            regi.letapos();
-        }
 
-        // Megcsúszás ellenőrzése új mezőn
-        if (allRajta != null && allRajta.getJeg() != null && allRajta.getJeg().jegPancel()) {
+        allRajta.letapos();
+
+        if (allRajta.getJeg().jegPancel()) {
             this.csuszkal();
+        }
+        
+        checkCélbaérés();
+    }
+
+    private void checkCélbaérés() {
+        if (allRajta != null && utvonala.isVege()) {
+            allRajta.setJarmu(null);
+            allRajta = null;
         }
     }
 
@@ -57,23 +58,21 @@ public class Auto extends Jarmu {
         }
         
         if (slipTo != null) {
-            if (!slipTo.jarhato()) {
-                // ütközött állapot
+            if (slipTo.getJarmu() != null || slipTo.getHo().getMennyiseg() >= 4) {
                 this.utkozik();
                 if (slipTo.getJarmu() != null) {
                     slipTo.getJarmu().utkozik();
                 }
             } else {
-                // Sikeresen átcsúszik
                 Utszakasz regi = allRajta;
                 if (regi != null) {
                     regi.setJarmu(null);
                 }
                 allRajta = slipTo;
                 allRajta.setJarmu(this);
-                leptetUtvonal();
-                if (regi != null) {
-                    regi.letapos();
+                // DO NOT leptetUtvonal here!
+                if (allRajta != null) {
+                    allRajta.letapos();
                 }
             }
         }
@@ -81,9 +80,12 @@ public class Auto extends Jarmu {
 
     @Override
     public void utkozik() {
-        this.utkozott = true;
-        if (this.allRajta != null) {
-            this.allRajta.jarhatatlannaValik();
+        if (!utkozott) {
+            this.utkozott = true;
+            Main.varos.incrementElakadas();
+            if (this.allRajta != null) {
+                this.allRajta.jarhatatlannaValik();
+            }
         }
     }
     

@@ -1,5 +1,5 @@
-init test15_palya.txt
+init palya.txt
 car car1 a b c
 step
 step
-save test15_expected.txt
+save expected.txt

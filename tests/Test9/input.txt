@@ -1,4 +1,4 @@
-init test9_palya.txt
+init palya.txt
 snow
 snow
-save test9_expected.txt
+save expected.txt

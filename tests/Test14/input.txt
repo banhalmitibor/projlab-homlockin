@@ -1,4 +1,4 @@
-init test14_palya.txt
+init palya.txt
 car car1 a b c
 add -tj tj1
 step
@@ -8,4 +8,4 @@ buy -hk hk1 tj1 d
 route hk1 b c
 step
 step
-save test14_expected.txt
+save expected.txt

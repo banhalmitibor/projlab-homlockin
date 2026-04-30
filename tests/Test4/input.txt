@@ -1,4 +1,4 @@
-init test4_palya.txt
+init palya.txt
 add -tj tj1
 buy -hk hk1 tj1 a
 buy -fej hk1 sarkany
@@ -9,4 +9,4 @@ step
 step
 step
 step
-save test4_expected.txt
+save expected.txt

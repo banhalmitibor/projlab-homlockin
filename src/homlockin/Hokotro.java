@@ -9,7 +9,7 @@ public class Hokotro extends Jarmu {
     private TakaritoJatekos vezeti;
     
     private int soMennyiseg;
-    private int bioKerozinMennyiseg;
+    private int bioKerozinmennyiseg;
     private int zuzalekMennyiseg;
 
     public Hokotro(String id, TakaritoJatekos vezeti) {
@@ -17,7 +17,7 @@ public class Hokotro extends Jarmu {
         this.vezeti = vezeti;
         this.fejei = new ArrayList<>();
         this.soMennyiseg = 0;
-        this.bioKerozinMennyiseg = 0;
+        this.bioKerozinmennyiseg = 0;
         this.zuzalekMennyiseg = 0;
         
         // By default it comes with a "sopro" fej according to requirements.
@@ -44,18 +44,11 @@ public class Hokotro extends Jarmu {
 
     @Override
     public void lep() {
-        // Hókotró calls takarit() every time it's on a section
-        takarit();
-
         Utszakasz kov = utvonala.getKivantUtszakasz();
         if (kov == null) {
             return;
         }
 
-        // Hókotró can step on any snow because it cleans its way, but let's check jarhato.
-        // Actually, snow doesn't block the snowplow!
-        // "A hókotró az alatta lévő útszakasz hóállapotát meg tudja változtatni."
-        // Let's just say it can't step if there's a vehicle there.
         if (kov.getJarmu() != null) {
             return; 
         }
@@ -63,7 +56,6 @@ public class Hokotro extends Jarmu {
         Utszakasz regi = allRajta;
         if (regi != null) {
             regi.setJarmu(null);
-            regi.letapos();
         }
         
         allRajta = kov;
@@ -73,15 +65,17 @@ public class Hokotro extends Jarmu {
         if (allRajta != null && allRajta.getJeg() != null && allRajta.getJeg().jegPancel()) {
             this.csuszkal();
         } else {
-             // Takarít when it arrives at a new section
             takarit();
         }
     }
 
     public void takarit() {
         if (felrakottFeje != null && allRajta != null) {
+            boolean voltCsapadek = (allRajta.getHo() != null && allRajta.getHo().getMennyiseg() > 0)
+                    || (allRajta.getJeg() != null && allRajta.getJeg().getMennyiseg() > 0)
+                    || (allRajta.getZuzalek() != null && allRajta.getZuzalek().vanZuzalek());
             felrakottFeje.munkatVegez(allRajta);
-            if (vezeti != null) {
+            if (vezeti != null && voltCsapadek) {
                 vezeti.penztKap(5); // Pont/Pénz a takarításért
             }
         }
@@ -102,7 +96,6 @@ public class Hokotro extends Jarmu {
                 Utszakasz regi = allRajta;
                 if (regi != null) {
                     regi.setJarmu(null);
-                    regi.letapos();
                 }
                 allRajta = slipTo;
                 allRajta.setJarmu(this);
@@ -115,7 +108,6 @@ public class Hokotro extends Jarmu {
     @Override
     public void utkozik() {
         // "Hókotró ütközése: A hókotrónak nem esik baja, gondtalanul folytatja útját"
-        // Semmi következménye magára a hókotróra
     }
 
     public void soFeltoltes() { this.soMennyiseg = 30; }
@@ -127,10 +119,10 @@ public class Hokotro extends Jarmu {
         return false;
     }
 
-    public void biokerozinFeltoltes() { this.bioKerozinMennyiseg = 30; }
+    public void biokerozinFeltoltes() { this.bioKerozinmennyiseg = 30; }
     public boolean biokerozinFogyasztas(int m) {
-        if (this.bioKerozinMennyiseg >= m) {
-            this.bioKerozinMennyiseg -= m;
+        if (this.bioKerozinmennyiseg >= m) {
+            this.bioKerozinmennyiseg -= m;
             return true;
         }
         return false;
@@ -146,6 +138,6 @@ public class Hokotro extends Jarmu {
     }
     
     public int getSo() { return soMennyiseg; }
-    public int getKerozin() { return bioKerozinMennyiseg; }
+    public int getKerozin() { return bioKerozinmennyiseg; }
     public int getZuzalek() { return zuzalekMennyiseg; }
 }
