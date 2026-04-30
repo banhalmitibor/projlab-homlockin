@@ -4,20 +4,20 @@ add -tj takarito2
 add -bj buszvezeto al d
 route -bj buszvezeto bl cl d
 step
-step //nem tud lepni
+step
 buy -hk hksopro takarito1 f
 buy -fej hksopro zuzalek
 buy -zuzalek hksopro
 swap hksopro sopro
 route hksopro cl d d2
 car auto ar br cr e e2
-step //utana busz:bl auto:br hk1:cl
+step
 swap hksopro zuzalek
-step //utana busz:cl auto:br megakad hk1:d
+step
 buy -hk hkhanyo takarito2 f
 buy -fej hkhanyo hanyo
 route hkhanyo cr e e2
-step //utana busz:d auto:br megakad hk1:d2 hk2:cr
-step //utana busz:d final auto:cr utkozik hk1:d2 final hk2:e
-step //hk2 e2 final
+step
+step
+step
 save expected.txt
