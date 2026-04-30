@@ -13,7 +13,7 @@ public class RunTests {
 
     public static void runTest(String[] args) {
         int passed = 0;
-        int numTests = 25;
+        int numTests = 26;
         
         for (int i = 1; i <= numTests; i++) {
             String dir = "tests/Test" + i + "/";

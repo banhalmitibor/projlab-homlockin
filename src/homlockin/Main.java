@@ -4,6 +4,9 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.TreeMap;
+
+import tests.RunTests;
+
 import java.util.Map;
 
 public class Main {
@@ -77,6 +80,9 @@ public class Main {
                     break;
                 case "list":
                     handleList(parts);
+                    break;
+                case "tests":
+                    RunTests.runTest(parts);;
                     break;
                 default:
                     // ignore or error
