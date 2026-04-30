@@ -45,6 +45,7 @@ public class Hokotro extends Jarmu {
     @Override
     public void lep() {
         Utszakasz kov = utvonala.getKivantUtszakasz();
+        kov = allRajta.kovetkezoUtszakasz(kov);
         if (kov == null) {
             return;
         }
@@ -62,11 +63,11 @@ public class Hokotro extends Jarmu {
         allRajta.setJarmu(this);
         leptetUtvonal();
         
-        if (allRajta != null && allRajta.getJeg() != null && allRajta.getJeg().jegPancel()) {
+        /*if (allRajta != null && allRajta.getJeg() != null && allRajta.getJeg().jegPancel()) {
             this.csuszkal();
-        } else {
+        } else {*/
             takarit();
-        }
+        //}
     }
 
     public void takarit() {
@@ -83,7 +84,7 @@ public class Hokotro extends Jarmu {
 
     @Override
     public void csuszkal() {
-        Utszakasz slipTo = utvonala.getKivantUtszakasz();
+        /*Utszakasz slipTo = utvonala.getKivantUtszakasz();
         if (slipTo == null && allRajta != null) {
             slipTo = allRajta.csuszvaKovetkezoUtszakasz();
         }
@@ -102,12 +103,12 @@ public class Hokotro extends Jarmu {
                 leptetUtvonal();
                 takarit();
             }
-        }
+        }*/
     }
 
     @Override
     public void utkozik() {
-        // "Hókotró ütközése: A hókotrónak nem esik baja, gondtalanul folytatja útját"
+        // "Hókotró ütközése: A hókotrónak nem esik baja, gondtalanul folytatja útját" - Vince
     }
 
     public void soFeltoltes() { this.soMennyiseg = 30; }

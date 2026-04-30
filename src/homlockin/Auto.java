@@ -16,6 +16,7 @@ public class Auto extends Jarmu {
         }
 
         Utszakasz kov = utvonala.getKivantUtszakasz();
+        kov = allRajta.kovetkezoUtszakasz(kov);
         if (kov == null) {
             checkCélbaérés();
             return;
@@ -51,11 +52,11 @@ public class Auto extends Jarmu {
 
     @Override
     public void csuszkal() {
-        Utvonal u = getUtvonala();
-        Utszakasz slipTo = u.getKivantUtszakasz();
-        if(slipTo == null){
+        //Utvonal u = getUtvonala();
+        Utszakasz slipTo = allRajta.csuszvaKovetkezoUtszakasz();
+        /*if(slipTo == null){
             slipTo = allRajta.csuszvaKovetkezoUtszakasz();
-        }
+        }*/
         
         if (slipTo != null) {
             if (slipTo.getJarmu() != null || slipTo.getHo().getMennyiseg() >= 4) {

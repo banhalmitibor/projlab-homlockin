@@ -3,9 +3,9 @@ ar U - bl br :
 bl U bj cl cr :
 br U - cl cr :
 cl U cr d : ho4
-cr U - e : j4
+cr U - e : jeg4
 d  U - d2 :
 d2 U - :
 e  U - e2 :
 e2 U - :
-f  U - c cj :
+f  U - cl cr :

@@ -1,6 +1,6 @@
 init palya.txt
-car car1 a b c e
-car car2 d c e
+car car1 d c e
+car car2 a b c e
 step
 step
 save expected.txt

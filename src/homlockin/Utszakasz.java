@@ -41,11 +41,13 @@ public class Utszakasz {
         }
     }
 
-    public Utszakasz kovetkezoUtszakasz() {
+    public Utszakasz kovetkezoUtszakasz(Utszakasz wanted) {
         if (!kovetkezok.isEmpty()) {
+            if(kovetkezok.contains(wanted))
+                return wanted;
             return kovetkezok.get(0);
         }
-        return jobbUt;
+        return null;
     }
 
     public Utszakasz getJobbraLevoSzakasz() {

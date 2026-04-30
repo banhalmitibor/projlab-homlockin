@@ -1,15 +1,15 @@
-takarito1 905 hksopro
-	hk1 sopro 0 0 28
-takarito2 865 hkhanyo
-	hk1 hanyo 0 0 0
-buszvezeto 5 d
+takarito1 845 hksopro
+	hksopro zuzalek 0 0 28
+takarito2 855 hkhanyo
+	hkhanyo hanyo 0 0 0
+buszvezeto 5
 al - :
 ar - :
 bl - :
 br - :
 cl - :
-cr auto : ho4 j4
-d  buszvezeto : zuzalek
+cr auto : jeg4
+d buszvezeto : zuzalek
 d2 hksopro : zuzalek
 e  - :
 e2 hkhanyo :

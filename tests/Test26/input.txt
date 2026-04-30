@@ -2,7 +2,7 @@ init palya.txt
 add -tj takarito1
 add -tj takarito2
 add -bj buszvezeto al d
-route -bj buszvezeto bl cl d
+route buszvezeto bl cl d
 step
 step
 buy -hk hksopro takarito1 f
@@ -17,6 +17,7 @@ step
 buy -hk hkhanyo takarito2 f
 buy -fej hkhanyo hanyo
 route hkhanyo cr e e2
+step
 step
 step
 step

@@ -18,11 +18,13 @@ public class Busz extends Jarmu {
         }
 
         Utszakasz kov = utvonala.getKivantUtszakasz();
+        kov = allRajta.kovetkezoUtszakasz(kov);
         if (kov == null) {
             return; 
         }
 
         if (!kov.jarhato()) {
+            System.out.println("Nem jarhato");
             return; 
         }
 
@@ -53,10 +55,12 @@ public class Busz extends Jarmu {
 
     @Override
     public void csuszkal() {
-        Utszakasz slipTo = utvonala.getKivantUtszakasz();
-        if (slipTo == null && allRajta != null) {
+        //Utvonal u = getUtvonala();
+        Utszakasz slipTo = allRajta.csuszvaKovetkezoUtszakasz(); //All rajta hopefully nem null
+        /*if(slipTo == null){
             slipTo = allRajta.csuszvaKovetkezoUtszakasz();
-        }
+        }*/
+        
         
         if (slipTo != null) {
             if (!slipTo.jarhato()) {

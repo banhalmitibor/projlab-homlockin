@@ -24,7 +24,7 @@ public class Varos {
     public void leptet() {
         // Sort vehicles by ID to ensure deterministic order (matching TreeMap in Main)
         List<Jarmu> sortedJarmuvek = new ArrayList<>(kozlekedikBenne);
-        Collections.sort(sortedJarmuvek, (j1, j2) -> j1.getId().compareTo(j2.getId()));
+        //Collections.sort(sortedJarmuvek, (j1, j2) -> j1.getId().compareTo(j2.getId()));
 
         for (Jarmu j : sortedJarmuvek) {
             j.lep();
