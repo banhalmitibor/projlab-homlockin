@@ -11,7 +11,7 @@ String jId = mapEntry.getKey();
                 TakaritoJatekos tj = (TakaritoJatekos) j;
                 String jmId = "-";
                 // find jarmu by iterating Main.jarmuvek?
-                Hokotro hk = tj.getHokotroje();
+                Hokotro hk = tj.getHokotroi();
                 if (hk != null) {
                     for (Map.Entry<String, Jarmu> entry : Main.jarmuvek.entrySet()) {
                         if (entry.getValue() == hk) {

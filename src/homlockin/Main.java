@@ -80,18 +80,6 @@ public class Main {
                 case "car":
                     handleCar(parts);
                     break;
-                case "swap":
-                    handleSwap(parts);
-                    break;
-                case "car":
-                    handleCar(parts);
-                    break;
-                case "swap":
-                    handleSwap(parts);
-                    break;
-                case "car":
-                    handleCar(parts);
-                    break;
                 case "buy":
                     handleBuy(parts);
                     break;
@@ -217,42 +205,12 @@ public class Main {
         }
     }
     
-        private static void handleSwap(String[] parts) {
-        if (parts.length < 3) return;
-        String hkId = parts[1];
-        String tipus = parts[2];
-        Hokotro hk = (Hokotro) jarmuvek.get(hkId);
-        if (hk != null) hk.csere(tipus);
-    }
+        
 
-    private static void handleCar(String[] parts) {
-        if (parts.length < 3) return;
-        String id = parts[1];
-        String startId = parts[2];
-        Utszakasz pos = utszakaszok.get(startId);
-        if (pos != null) {
-            Auto a = new Auto(id);
-            a.setAllRajta(pos);
-            pos.setJarmu(a);
-            varos.addJarmu(a);
-            jarmuvek.put(id, a);
-            for (int i = 3; i < parts.length; i++) {
-                Utszakasz u = utszakaszok.get(parts[i]);
-                if (u != null) a.getUtvonala().addUtszakasz(u);
-            }
-        }
-    }
 
-    private static TakaritoJatekos findOwner(Hokotro hk) {
-        for (Jatekos j : jatekosok.values()) {
-            if (j instanceof TakaritoJatekos && ((TakaritoJatekos)j).getHokotroje() == hk) {
-                return (TakaritoJatekos) j;
-            }
-        }
-        return null;
-    }
+    
 
-        private static void handleSwap(String[] parts) {
+    private static void handleSwap(String[] parts) {
         if (parts.length < 3) return;
         String hkId = parts[1];
         String tipus = parts[2];
@@ -260,40 +218,7 @@ public class Main {
         if (hk != null) hk.csere(tipus);
     }
     
-    private static void handleCar(String[] parts) {
-        if (parts.length < 3) return;
-        String id = parts[1];
-        String startId = parts[2];
-        Utszakasz pos = utszakaszok.get(startId);
-        if (pos != null) {
-            Auto a = new Auto(id);
-            a.setAllRajta(pos);
-            pos.setJarmu(a);
-            varos.addJarmu(a);
-            jarmuvek.put(id, a);
-            for (int i = 3; i < parts.length; i++) {
-                Utszakasz u = utszakaszok.get(parts[i]);
-                if (u != null) a.getUtvonala().addUtszakasz(u);
-            }
-        }
-    }
-    
-    private static TakaritoJatekos findOwner(Hokotro hk) {
-        for (Jatekos j : jatekosok.values()) {
-            if (j instanceof TakaritoJatekos && ((TakaritoJatekos)j).getHokotroje() == hk) {
-                return (TakaritoJatekos) j;
-            }
-        }
-        return null;
-    }
-
-        private static void handleSwap(String[] parts) {
-        if (parts.length < 3) return;
-        String hkId = parts[1];
-        String tipus = parts[2];
-        Hokotro hk = (Hokotro) jarmuvek.get(hkId);
-        if (hk != null) hk.csere(tipus);
-    }
+        
     
     private static void handleCar(String[] parts) {
         if (parts.length < 3) return;
@@ -367,7 +292,8 @@ public class Main {
             }
         }
     }
-private static void handleRoute(String[] parts) {
+    
+    private static void handleRoute(String[] parts) {
         // route jarmuId utszakasz1 utszakasz2 ...
         // Ha utszakasz nem létezik, esetleg hagyjuk figyelmen kivul vagy hibat jelzunk
         if (parts.length < 3) {
