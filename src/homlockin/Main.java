@@ -80,18 +80,6 @@ public class Main {
                 case "car":
                     handleCar(parts);
                     break;
-                case "swap":
-                    handleSwap(parts);
-                    break;
-                case "car":
-                    handleCar(parts);
-                    break;
-                case "swap":
-                    handleSwap(parts);
-                    break;
-                case "car":
-                    handleCar(parts);
-                    break;
                 case "buy":
                     handleBuy(parts);
                     break;
