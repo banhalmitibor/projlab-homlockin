@@ -1,0 +1,10 @@
+init test19_palya.txt
+add -bj bj1 d a
+route bj1 c e
+car car1 a b c
+step
+step
+step
+step
+step
+save test19_expected.txt

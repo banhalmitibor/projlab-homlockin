@@ -1,0 +1,5 @@
+a U - b :
+b U - c : ho3
+c U - d : jeg3
+d U - e : jeg3t
+e U - : zuzalek

@@ -1,0 +1,10 @@
+init test5_palya.txt
+add -tj tj1
+buy -hk hk1 tj1 a
+buy -fej hk1 zuzalek
+swap hk1 zuzalek
+buy -zuzalek hk1
+route hk1 b c
+step
+step
+save test5_expected.txt

@@ -1,0 +1,12 @@
+init test6_palya.txt
+add -tj tj1
+buy -hk hk1 tj1 a
+buy -fej hk1 soszoro
+swap hk1 soszoro
+buy -so hk1
+route hk1 b c d e
+step
+step
+step
+step
+save test6_expected.txt

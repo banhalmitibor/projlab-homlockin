@@ -1,0 +1,10 @@
+a U - b :
+b U bb c : ho3
+c U cc d : jeg3
+d U dd e : jeg3t
+e U ee f : zuzalek
+f U - : ho5
+bb U - :
+cc U - :
+dd U - :
+ee U - :

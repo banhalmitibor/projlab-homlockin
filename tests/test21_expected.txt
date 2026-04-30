@@ -1,0 +1,7 @@
+tj1 900 hk1
+	hk1 sopro 0 0 0
+tj2 900 hk2
+	hk2 sopro 0 0 0
+a hk1 :
+b hk2 :
+c - :

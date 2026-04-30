@@ -3,17 +3,17 @@ package homlockin;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 
 public class Main {
-    private static Varos varos = new Varos("Homlockin");
+    public static Varos varos = new Varos("Homlockin");
     private static Bolt bolt = new Bolt();
     
     // Névterek a teszteléshez (az ID alapú kereséshez a parancsokban)
-    private static Map<String, Jarmu> jarmuvek = new HashMap<>();
-    private static Map<String, Utszakasz> utszakaszok = new HashMap<>();
-    private static Map<String, Jatekos> jatekosok = new HashMap<>();
+    private static Map<String, Jarmu> jarmuvek = new TreeMap<>();
+    public static Map<String, Utszakasz> utszakaszok = new TreeMap<>();
+    private static Map<String, Jatekos> jatekosok = new TreeMap<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -40,7 +40,7 @@ public class Main {
         scanner.close();
     }
 
-    private static void processCommand(String line) {
+    public static void processCommand(String line) {
         String[] parts = line.split("\\s+");
         String cmd = parts[0].toLowerCase();
         
@@ -67,10 +67,31 @@ public class Main {
                     }
                     break;
                 
+                case "link":
+                    handleLink(parts);
+                    break;
                 case "add":
                     handleAdd(parts);
                     break;
                     
+                case "swap":
+                    handleSwap(parts);
+                    break;
+                case "car":
+                    handleCar(parts);
+                    break;
+                case "swap":
+                    handleSwap(parts);
+                    break;
+                case "car":
+                    handleCar(parts);
+                    break;
+                case "swap":
+                    handleSwap(parts);
+                    break;
+                case "car":
+                    handleCar(parts);
+                    break;
                 case "buy":
                     handleBuy(parts);
                     break;
@@ -196,15 +217,116 @@ public class Main {
         }
     }
     
-    private static void handleBuy(String[] parts) {
-        if (parts.length < 4) {
-            System.out.println("Hiba: Parameterhiany (pl. buy -hk hk1 tj1 u1)");
-            return;
+        private static void handleSwap(String[] parts) {
+        if (parts.length < 3) return;
+        String hkId = parts[1];
+        String tipus = parts[2];
+        Hokotro hk = (Hokotro) jarmuvek.get(hkId);
+        if (hk != null) hk.csere(tipus);
+    }
+
+    private static void handleCar(String[] parts) {
+        if (parts.length < 3) return;
+        String id = parts[1];
+        String startId = parts[2];
+        Utszakasz pos = utszakaszok.get(startId);
+        if (pos != null) {
+            Auto a = new Auto(id);
+            a.setAllRajta(pos);
+            pos.setJarmu(a);
+            varos.addJarmu(a);
+            jarmuvek.put(id, a);
+            for (int i = 3; i < parts.length; i++) {
+                Utszakasz u = utszakaszok.get(parts[i]);
+                if (u != null) a.getUtvonala().addUtszakasz(u);
+            }
         }
+    }
+
+    private static TakaritoJatekos findOwner(Hokotro hk) {
+        for (Jatekos j : jatekosok.values()) {
+            if (j instanceof TakaritoJatekos && ((TakaritoJatekos)j).getHokotroje() == hk) {
+                return (TakaritoJatekos) j;
+            }
+        }
+        return null;
+    }
+
+        private static void handleSwap(String[] parts) {
+        if (parts.length < 3) return;
+        String hkId = parts[1];
+        String tipus = parts[2];
+        Hokotro hk = (Hokotro) jarmuvek.get(hkId);
+        if (hk != null) hk.csere(tipus);
+    }
+    
+    private static void handleCar(String[] parts) {
+        if (parts.length < 3) return;
+        String id = parts[1];
+        String startId = parts[2];
+        Utszakasz pos = utszakaszok.get(startId);
+        if (pos != null) {
+            Auto a = new Auto(id);
+            a.setAllRajta(pos);
+            pos.setJarmu(a);
+            varos.addJarmu(a);
+            jarmuvek.put(id, a);
+            for (int i = 3; i < parts.length; i++) {
+                Utszakasz u = utszakaszok.get(parts[i]);
+                if (u != null) a.getUtvonala().addUtszakasz(u);
+            }
+        }
+    }
+    
+    private static TakaritoJatekos findOwner(Hokotro hk) {
+        for (Jatekos j : jatekosok.values()) {
+            if (j instanceof TakaritoJatekos && ((TakaritoJatekos)j).getHokotroje() == hk) {
+                return (TakaritoJatekos) j;
+            }
+        }
+        return null;
+    }
+
+        private static void handleSwap(String[] parts) {
+        if (parts.length < 3) return;
+        String hkId = parts[1];
+        String tipus = parts[2];
+        Hokotro hk = (Hokotro) jarmuvek.get(hkId);
+        if (hk != null) hk.csere(tipus);
+    }
+    
+    private static void handleCar(String[] parts) {
+        if (parts.length < 3) return;
+        String id = parts[1];
+        String startId = parts[2];
+        Utszakasz pos = utszakaszok.get(startId);
+        if (pos != null) {
+            Auto a = new Auto(id);
+            a.setAllRajta(pos);
+            pos.setJarmu(a);
+            varos.addJarmu(a);
+            jarmuvek.put(id, a);
+            for (int i = 3; i < parts.length; i++) {
+                Utszakasz u = utszakaszok.get(parts[i]);
+                if (u != null) a.getUtvonala().addUtszakasz(u);
+            }
+        }
+    }
+    
+    private static TakaritoJatekos findOwner(Hokotro hk) {
+        for (Jatekos j : jatekosok.values()) {
+            if (j instanceof TakaritoJatekos && ((TakaritoJatekos)j).getHokotroje() == hk) {
+                return (TakaritoJatekos) j;
+            }
+        }
+        return null;
+    }
+
+    private static void handleBuy(String[] parts) {
+        if (parts.length < 3) return;
         String type = parts[1];
         
         if (type.equals("-hk")) {
-            // buy -hk hokotroId takaritoId utszakaszId
             if (parts.length >= 5) {
                 String hkId = parts[2];
                 String tjId = parts[3];
@@ -219,49 +341,33 @@ public class Main {
                          varos.addJarmu(hk);
                          jarmuvek.put(hkId, hk);
                          u.setJarmu(hk);
-                         System.out.println(tjId + " vasarolt egy Hokotrot ("+hkId+") a " + uId + " utszakaszra.");
-                    } else {
-                         System.out.println("Nem sikerult a vasarlas (nincs penz?).");
                     }
-                } else {
-                    System.out.println("Hiba: hibasjatekos ("+tjId+") vagy utszakasz ("+uId+").");
                 }
-            } else {
-                System.out.println("Hiba: Parameterhiany buy -hk");
             }
         } else if (type.equals("-fej")) {
-            // buy -fej tj1 hk1 <tipus> pl: buy -fej tj1 hk1 sopro
-            if (parts.length >= 5) {
-                String tjId = parts[2];
-                String hkId = parts[3];
-                String fejType = parts[4];
-
-                Jatekos j = jatekosok.get(tjId);
-                Jarmu jarmu = jarmuvek.get(hkId);
-
-                if (j instanceof TakaritoJatekos && jarmu instanceof Hokotro) {
-                    TakaritoJatekos tj = (TakaritoJatekos) j;
-                    Hokotro hk = (Hokotro) jarmu;
-                    HokotroFej fej = null;
-                    if (fejType.equals("sopro")) fej = new Soprofej();
-                    else if (fejType.equals("jegtoro")) fej = new Jegtorofej();
-                    else if (fejType.equals("hanyo")) fej = new Hanyofej();
-                    else if (fejType.equals("zuzalek")) fej = new Zuzalekfej();
-                    else if (fejType.equals("soszoro")) fej = new Soszorofej();
-                    else if (fejType.equals("sarkany")) fej = new Sarkanyfej();
-                    
-                    if (fej != null) {
-                        bolt.hokotroFejetVasarol(tj, hk, fej);
-                        System.out.println("Fej ("+fejType+") felszerelve a hk="+hkId+" szamara.");
-                    } else {
-                        System.out.println("Ismeretlen fej tipus: " + fejType);
-                    }
+            if (parts.length >= 4) {
+                String hkId = parts[2];
+                String fejType = parts[3];
+                Hokotro hk = (Hokotro) jarmuvek.get(hkId);
+                if (hk != null) {
+                    TakaritoJatekos tj = findOwner(hk);
+                    bolt.fejetVasarol(hkId + "_" + fejType, tj, fejType);
+                }
+            }
+        } else if (type.equals("-so") || type.equals("-zuzalek") || type.equals("-kerozin")) {
+            if (parts.length >= 3) {
+                String hkId = parts[2];
+                Hokotro hk = (Hokotro) jarmuvek.get(hkId);
+                if (hk != null) {
+                    TakaritoJatekos tj = findOwner(hk);
+                    if (type.equals("-so")) bolt.sotVasarol(tj);
+                    else if (type.equals("-zuzalek")) bolt.zuzalekotVasarol(tj);
+                    else if (type.equals("-kerozin")) bolt.biokerozintVasarol(tj);
                 }
             }
         }
     }
-    
-    private static void handleRoute(String[] parts) {
+private static void handleRoute(String[] parts) {
         // route jarmuId utszakasz1 utszakasz2 ...
         // Ha utszakasz nem létezik, esetleg hagyjuk figyelmen kivul vagy hibat jelzunk
         if (parts.length < 3) {
@@ -320,6 +426,15 @@ public class Main {
             System.out.println("Fajl betoltese sikeres.");
         } catch (FileNotFoundException e) {
             System.out.println("Hiba: Fajl nem talalhato (" + filename + ")");
+        }
+    }
+
+    private static void handleLink(String[] parts) {
+        if (parts.length < 3) return;
+        Utszakasz u1 = utszakaszok.get(parts[1]);
+        Utszakasz u2 = utszakaszok.get(parts[2]);
+        if (u1 != null && u2 != null) {
+            u1.addKovetkezo(u2);
         }
     }
 }

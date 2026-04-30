@@ -1,0 +1,5 @@
+a U - b :
+b U - c :
+c U - d : ho1 jeg2
+d U - e :
+e U - :

@@ -1,0 +1,6 @@
+init test21_palya.txt
+add -tj tj1
+add -tj tj2
+buy -hk hk1 tj1 a
+buy -hk hk2 tj2 b
+save test21_expected.txt

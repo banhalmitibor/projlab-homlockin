@@ -1,0 +1,4 @@
+init test16_palya.txt
+car car1 a b c
+step
+save test16_expected.txt

@@ -1,0 +1,3 @@
+init test7_palya.txt
+snow
+save test7_expected.txt

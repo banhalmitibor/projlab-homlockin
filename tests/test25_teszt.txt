@@ -1,0 +1,6 @@
+init test25_palya.txt
+add -tj tj1
+buy -hk hk1 tj1 a
+buy -fej hk1 soszoro
+swap hk1 soszoro
+save test25_expected.txt

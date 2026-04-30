@@ -1,0 +1,9 @@
+init test12_palya.txt
+add -tj tj1
+buy -hk hk1 tj1 a
+route hk1 b c d
+step
+step
+step
+step
+save test12_expected.txt

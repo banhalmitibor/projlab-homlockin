@@ -1,0 +1,5 @@
+init test24_palya.txt
+add -tj tj1
+buy -hk hk1 tj1 a
+buy -zuzalek hk1
+save test24_expected.txt

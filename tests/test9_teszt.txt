@@ -1,0 +1,4 @@
+init test9_palya.txt
+snow
+snow
+save test9_expected.txt

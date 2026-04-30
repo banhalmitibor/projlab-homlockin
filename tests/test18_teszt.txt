@@ -1,0 +1,7 @@
+init test18_palya.txt
+car car1 b c d e
+car car2 a b c d e
+step
+step
+step
+save test18_expected.txt
