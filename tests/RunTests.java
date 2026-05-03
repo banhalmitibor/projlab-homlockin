@@ -32,7 +32,7 @@ public class RunTests {
             PrintStream sysOut = System.out;
             try {
                 // Silently process setup
-                System.setOut(new PrintStream(new java.io.OutputStream() { public void write(int b) {} }));
+                //System.setOut(new PrintStream(new java.io.OutputStream() { public void write(int b) {} }));
                 Main.processCommand("init");
                 TestParser.loadPalya(palya);
             } finally {
@@ -60,9 +60,9 @@ public class RunTests {
                         }
                         
                         // Otherwise execute command Silently (to match expected output exactly)
-                        System.setOut(new PrintStream(new java.io.OutputStream() { public void write(int b) {} }));
+                        //System.setOut(new PrintStream(new java.io.OutputStream() { public void write(int b) {} }));
                         Main.processCommand(cmd);
-                        System.setOut(old);
+                        //System.setOut(old);
                     }
                 }
                 sc.close();

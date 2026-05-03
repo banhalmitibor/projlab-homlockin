@@ -3,6 +3,7 @@ package homlockin;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.TreeMap;
 
 import tests.RunTests;
@@ -48,6 +49,7 @@ public class Main {
                 case "palya":
                     if (parts.length > 1) {
                         TestParser.loadPalya(parts[1]);
+                        System.out.println("a pálya beállítva, forrás: " + parts[1]);
                     }
                     break;
                 case "add":
@@ -67,6 +69,7 @@ public class Main {
                     break;
                 case "step":
                     varos.leptet();
+                    System.out.println("leptetve");
                     break;
                 case "snow":
                     varos.havazas();
@@ -75,8 +78,7 @@ public class Main {
                     StateDumper.dumpAll();
                     break;
                 case "save":
-                    // RunTests and RestoreTests handle this or we can implement it
-                    StateDumper.dumpAll();
+                    handleSave(parts);
                     break;
                 case "list":
                     handleList(parts);
@@ -95,12 +97,19 @@ public class Main {
         String type = parts[1];
         String id = parts[2];
         if (type.equals("-tj")) {
-            TakaritoJatekos tj = new TakaritoJatekos(id);
-            tj.setBolt(bolt);
-            varos.addJatekos(tj);
-            jatekosok.put(id, tj);
+            if (jatekosok.containsKey(id)) {
+                System.out.println("\"" + id + "\" nevű takarítójátékos már létezik");
+            } else {
+                TakaritoJatekos tj = new TakaritoJatekos(id);
+                tj.setBolt(bolt);
+                varos.addJatekos(tj);
+                jatekosok.put(id, tj);
+                System.out.println("\"" + id + "\" nevű takarítójátékos hozzáadva");
+            }
         } else if (type.equals("-bj")) {
-            if (parts.length >= 5) {
+            if (jatekosok.containsKey(id)) {
+                System.out.println("\"" + id + "\" nevű buszvezető játékos már létezik");
+            } else if (parts.length >= 5) {
                 Utszakasz v1 = utszakaszok.get(parts[3]);
                 Utszakasz v2 = utszakaszok.get(parts[4]);
                 BuszvezetoJatekos bj = new BuszvezetoJatekos(id, v1, v2);
@@ -111,6 +120,7 @@ public class Main {
                 bj.setVezeti(b);
                 varos.addJarmu(b);
                 jarmuvek.put(id, b);
+                System.out.println("\"" + id + "\" nevű buszvezető játékos hozzáadva");
             }
         }
     }
@@ -122,7 +132,10 @@ public class Main {
         Hokotro hk = (Hokotro) jarmuvek.get(hkId);
         if (hk != null) {
             HokotroFej fej = createFej(type);
-            if (fej != null) hk.fejetCserel(fej);
+            if (fej != null) {
+                hk.fejetCserel(fej);
+                System.out.println(hkId + " azonosítójú hókotrónak a " + type + " típusú fej sikeresen beállítva");
+            }
         }
     }
 
@@ -158,6 +171,9 @@ public class Main {
                     if (hk != null) {
                         varos.addJarmu(hk);
                         jarmuvek.put(hkId, hk);
+                        System.out.println("\"" + tj.getNev() + "\" nevű takarítójátékosnak új hókotró megvéve, a hókotró azonosítója: " + hkId);
+                    } else {
+                        System.out.println("\"" + tj.getNev() + "\" nevű takarítójátékosnak nincs elég pénze egy új hókotróra");
                     }
                 }
             }
@@ -166,31 +182,63 @@ public class Main {
                 Hokotro hk = (Hokotro) jarmuvek.get(parts[2]);
                 TakaritoJatekos tj = findOwner(hk);
                 if (hk != null && tj != null) {
-                    bolt.setVasarol(tj);
                     HokotroFej fej = createFej(parts[3]);
-                    if (fej != null) bolt.hokotroFejetVasarol(hk, fej);
+                    if (fej == null) {
+                        System.out.println("\"" + parts[3] + "\" típusú hókotrófej nem létezik, az opciók: \"sarkany\", \"soszoro\", \"zuzalek\", \"jegtoro\", \"hanyo\", \"sopro\"");
+                    } else {
+                        int before = tj.getPenz();
+                        bolt.setVasarol(tj);
+                        bolt.hokotroFejetVasarol(hk, fej);
+                        int after = tj.getPenz();
+                        if (after < before) {
+                            System.out.println(parts[2] + " azonosítójú hókotrónak új, \"" + parts[3] + "\" típusú fej megvéve");
+                        } else {
+                            System.out.println("\"" + tj.getNev() + "\" nevű takarítójátékosnak nincs elég pénze erre a típusú fejre");
+                        }
+                    }
                 }
             }
         } else if (type.equals("-so")) {
             Hokotro hk = (Hokotro) jarmuvek.get(parts[2]);
             TakaritoJatekos tj = findOwner(hk);
             if (hk != null && tj != null) {
+                int before = tj.getPenz();
                 bolt.setVasarol(tj);
                 bolt.sotVasarol(hk);
+                int after = tj.getPenz();
+                if (after < before) {
+                    System.out.println(parts[2] + " azonosítójú hókotrónak só megvéve");
+                } else {
+                    System.out.println("\"" + tj.getNev() + "\" nevű takarítójátékosnak nincs elég pénze sóra");
+                }
             }
         } else if (type.equals("-kerozin")) {
             Hokotro hk = (Hokotro) jarmuvek.get(parts[2]);
             TakaritoJatekos tj = findOwner(hk);
             if (hk != null && tj != null) {
+                int before = tj.getPenz();
                 bolt.setVasarol(tj);
                 bolt.biokerozinVasarol(hk);
+                int after = tj.getPenz();
+                if (after < before) {
+                    System.out.println(parts[2] + " azonosítójú hókotrónak biokerozin megvéve");
+                } else {
+                    System.out.println("\"" + tj.getNev() + "\" nevű takarítójátékosnak nincs elég pénze biokerozinra");
+                }
             }
         } else if (type.equals("-zuzalek")) {
             Hokotro hk = (Hokotro) jarmuvek.get(parts[2]);
             TakaritoJatekos tj = findOwner(hk);
             if (hk != null && tj != null) {
+                int before = tj.getPenz();
                 bolt.setVasarol(tj);
                 bolt.zuzalekotVasarol(hk);
+                int after = tj.getPenz();
+                if (after < before) {
+                    System.out.println(parts[2] + " azonosítójú hókotrónak zúzalék megvéve");
+                } else {
+                    System.out.println("\"" + tj.getNev() + "\" nevű takarítójátékosnak nincs elég pénze zúzalékra");
+                }
             }
         }
     }
@@ -213,11 +261,39 @@ public class Main {
                 if (s != null) u.addUtszakasz(s);
             }
             j.setUtvonala(u);
+            System.out.println(id + " azonosítójú hókotrónak új cél beállítva, a cél útszakasz azonosítója: " + parts[2]);
+            return;
         }
+
+        System.out.println("\"" + id + "\" nevű buszvezető játékos nem létezik");
     }
 
     private static void handleList(String[] parts) {
-        // Optional implementation
+        if (parts.length < 2) return;
+        String type = parts[1];
+        if (type.equals("-tj")) {
+            for (Jatekos j : jatekosok.values()) {
+                if (j instanceof TakaritoJatekos) {
+                    TakaritoJatekos tj = (TakaritoJatekos) j;
+                    System.out.print(tj.getNev());
+                    // try to print owned hokotrok ids
+                    for (Hokotro hk : tj.getHokotroi()) {
+                        System.out.print(" " + hk.getId());
+                    }
+                    System.out.println();
+                }
+            }
+        } else if (type.equals("-bj")) {
+            for (Jatekos j : jatekosok.values()) {
+                if (j instanceof BuszvezetoJatekos) {
+                    System.out.println(j.getNev());
+                }
+            }
+        } else if (type.equals("-palya")) {
+            for (Utszakasz u : utszakaszok.values()) {
+                System.out.println(u.getName());
+            }
+        }
     }
 
     private static TakaritoJatekos findOwner(Hokotro hk) {
@@ -227,6 +303,31 @@ public class Main {
             }
         }
         return null;
+    }
+
+    private static void handleSave(String[] parts) {
+        String filename = "jatekallas.txt";
+        if (parts != null && parts.length >= 2 && parts[1] != null && !parts[1].isEmpty()) {
+            filename = parts[1];
+        }
+
+        PrintStream oldOut = System.out;
+        PrintStream fos = null;
+        try {
+            fos = new PrintStream(new java.io.FileOutputStream(filename));
+            System.setOut(fos);
+            StateDumper.dumpAll();
+            System.out.flush();
+            // restore and print success
+            System.setOut(oldOut);
+            if (fos != null) fos.close();
+            System.out.println("a játékállás sikeresen el lett mentve a " + filename + " nevű fájlba");
+        } catch (Exception e) {
+            // restore and report failure
+            System.setOut(oldOut);
+            if (fos != null) try { fos.close(); } catch (Exception ex) {}
+            System.out.println("a mentés sikertelen volt");
+        }
     }
 
     private static HokotroFej createFej(String type) {
