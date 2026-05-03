@@ -24,6 +24,6 @@ public class Jeg extends Csapadek {
     }
 
     public boolean jegPancel() {
-        return this.mennyiseg >= 4 && !this.feltort;
+        return this.mennyiseg >= 4;
     }
 }

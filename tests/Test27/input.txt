@@ -1,0 +1,30 @@
+init palya.txt
+add -tj takarito
+buy -hk hk1 takarito a
+buy -fej hk1 jegtoro
+route hk1 b a
+step
+step
+swap hk1 sopro
+route hk1 b a
+step
+step
+car auto1 d e f f1 f2 f3 f4 f5 f6 f7 f8 f9
+step
+buy -fej hk1 zuzalek
+buy -zuzalek hk1
+route hk1 b a
+step
+step
+swap hk1 sopro
+route hk1 b a
+step
+step
+car auto2 d e f f1 f2 f3 f4 f5 f6 f7 f8 f9
+step
+step
+snow 
+snow
+car auto3 d e f f1 f2 f3 f4 f5 f6 f7 f8 f9
+step
+save expected.txt

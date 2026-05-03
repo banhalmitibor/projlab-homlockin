@@ -1,18 +1,14 @@
 a U - b :
-b U e c : jeg3
-c U - d :
-d U - a :
+b U e a : jeg3
+d U - e :
 e U - f : zuzalek
-f U - :
-f2 U - :
-f3 U - :
-f4 U - :
-f5 U - :
-f6 U - :
-f7 U - :
-f8 U - :
+f U - f2 :
+f2 U - f3 :
+f3 U - f4 :
+f4 U - f5 :
+f5 U - f6 :
+f6 U - f7 :
+f7 U - f8 :
+f8 U - f9 :
 f9 U - :
-f10 U - :
-f11 U - :
-f12 U - :
-f13 U - :
+

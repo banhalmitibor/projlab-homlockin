@@ -1,19 +1,19 @@
 package tests;
 
+import homlockin.Main;
+import homlockin.TestParser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
-import homlockin.Main;
-import homlockin.TestParser;
 
 public class RunTests {
 
     public static void runTest(String[] args) {
         int passed = 0;
-        int numTests = 26;
+        int numTests = 27;
         
         for (int i = 1; i <= numTests; i++) { //Loop vissza
             String dir = "tests/Test" + i + "/";

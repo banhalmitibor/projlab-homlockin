@@ -35,7 +35,7 @@ public class Utszakasz {
         if (!hoVedett) {
             ho.novel(1);
             // Zúzalék betemetése hó 4-es vagy nagyobb értéknél
-            if (ho.getMennyiseg() >= 4 && zuzalek.vanZuzalek()) {
+            if (zuzalek.vanZuzalek()) {
                 zuzalek.eltemet();
             }
         }
