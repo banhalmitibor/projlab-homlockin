@@ -57,6 +57,12 @@ public class Main {
     /**
      * Feldolgoz egy szöveges parancsot.
      * Az első szó határozza meg a parancs típusát (pl. {@code init}, {@code add}, {@code step} stb.).
+     * <p>
+     * Támogatott parancsok (összefoglaló):
+     * <ul>
+     *   <li>{@code tests} – lefuttatja az összes tesztesetet</li>
+     *   <li>{@code tests N} – csak az N-edik tesztesetet futtatja</li>
+     * </ul>
      *
      * @param line a feldolgozandó parancssori szöveg
      */
@@ -114,7 +120,7 @@ public class Main {
                     handleList(parts);
                     break;
                 case "tests":
-                    RunTests.runTest(parts);;
+                    RunTests.runTest(java.util.Arrays.copyOfRange(parts, 1, parts.length));
                     break;
                 default:
                     // ignore or error
