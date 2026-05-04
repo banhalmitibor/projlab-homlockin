@@ -9,8 +9,40 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * A játék automatizált tesztelését végző osztály.
+ * A {@code runTest()} metódus sorra lefuttatja az összes tesztesetet (alapértelmezetten 27-et),
+ * minden tesztnél betölti a pályát, végrehajtja a bemeneti parancsokat, majd összehasonlítja
+ * a tényleges kimenetét az elvárt kimenettel.
+ * <p>
+ * A tesztek a {@code tests/TestN/} könyvtárakban találhatók, ahol {@code N} a tesztszám.
+ * Minden könyvtárban három fájlnak kell lennie:
+ * <ul>
+ *   <li>{@code palya.txt} – a pálya leírása</li>
+ *   <li>{@code input.txt} – a végrehajtandó parancsok</li>
+ *   <li>{@code expected.txt} – a várt kimenet</li>
+ * </ul>
+ */
 public class RunTests {
 
+    /**
+     * Lefuttatja az összes tesztesetet és kiírja az eredményeket a standard kimenetre.
+     * <p>
+     * Minden tesztnél:
+     * <ol>
+     *   <li>Inicializálja a játékot és betölti a pályát ({@code palya.txt})</li>
+     *   <li>Végrehajtja az {@code input.txt} parancsait (az {@code init} parancsot kihagyja,
+     *       mert a pálya már be van töltve)</li>
+     *   <li>A {@code save} parancs helyett közvetlenül rögzíti az állapot-kimenetet
+     *       ({@link homlockin.StateDumper#dumpAll()})</li>
+     *   <li>Összehasonlítja a tényleges kimenetet az {@code expected.txt} tartalmával
+     *       (normalizálva: whitespace-egységesítéssel)</li>
+     *   <li>Kiírja, hogy a teszt PASSED vagy FAILED</li>
+     * </ol>
+     * A metódus végén összesíti az átment és összes teszt számát.
+     *
+     * @param args parancssori argumentumok (jelenleg nem használtak)
+     */
     public static void runTest(String[] args) {
         int passed = 0;
         int numTests = 27;
@@ -88,10 +120,24 @@ public class RunTests {
         System.out.println(passed + "/" + numTests + " tests passed.");
     }
 
+    /**
+     * Normalizálja a szöveget az összehasonlításhoz: levágja a vezető/záró szóközöket,
+     * a Windows-stílusú sortöréseket ({@code \r\n}) Unix-stílusúra ({@code \n}) alakítja,
+     * majd minden egymást követő whitespace-sorozatot egyetlen szóközre cserél.
+     *
+     * @param s a normalizálandó szöveg
+     * @return a normalizált szöveg
+     */
     private static String normalize(String s) {
         return s.trim().replace("\r\n", "\n").replaceAll("\\s+", " ");
     }
-    
+
+    /**
+     * A tesztosztály önálló futtatási belépési pontja.
+     * Meghívja a {@link #runTest(String[])} metódust a parancssori argumentumokkal.
+     *
+     * @param args parancssori argumentumok (jelenleg nem használtak)
+     */
     public static void main(String[] args) {
         runTest(args);
     }
