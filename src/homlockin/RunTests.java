@@ -1,7 +1,5 @@
-package tests;
+package homlockin;
 
-import homlockin.Main;
-import homlockin.TestParser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;

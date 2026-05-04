@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.TreeMap;
-
-import tests.RunTests;
-
 import java.util.Map;
 
 /**
@@ -120,7 +117,7 @@ public class Main {
                 case "list":
                     handleList(parts);
                     break;
-                case "tests":
+                case "test":
                     RunTests.runTest(java.util.Arrays.copyOfRange(parts, 1, parts.length));
                     break;
                 default:
