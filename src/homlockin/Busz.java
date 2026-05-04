@@ -46,7 +46,6 @@ public class Busz extends Jarmu {
         }
 
         if (!kov.jarhato()) {
-            System.out.println("Nem jarhato");
             return; 
         }
 

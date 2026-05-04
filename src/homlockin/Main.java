@@ -105,10 +105,11 @@ public class Main {
                     break;
                 case "step":
                     varos.leptet();
-                    System.out.println("leptetve");
+                    System.out.println("léptetve");
                     break;
                 case "snow":
                     varos.havazas();
+                    System.out.println("havazás megtörént");
                     break;
                 case "print":
                     StateDumper.dumpAll();

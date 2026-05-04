@@ -55,15 +55,12 @@ public class Varos {
      * majd eltávolítja azokat az autókat, amelyek célba értek (nincs útszakaszuk).
      */
     public void leptet() {
-        // Sort vehicles by ID to ensure deterministic order (matching TreeMap in Main)
         List<Jarmu> sortedJarmuvek = new ArrayList<>(kozlekedikBenne);
-        //Collections.sort(sortedJarmuvek, (j1, j2) -> j1.getId().compareTo(j2.getId()));
 
         for (Jarmu j : sortedJarmuvek) {
             j.lep();
         }
         
-        // Remove vehicles that left the track (Auto reaching target)
         Iterator<Jarmu> it = kozlekedikBenne.iterator();
         while (it.hasNext()) {
             Jarmu j = it.next();
