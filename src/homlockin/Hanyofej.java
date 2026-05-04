@@ -8,7 +8,7 @@ package homlockin;
  */
 public class Hanyofej implements HokotroFej {
 
-    /** A hókotrófejhez tartozó {@link Hokotro} járű. */
+    /** A hókotrófejhez tartozó {@link Hokotro} jármű. */
     private Hokotro hokotro;
 
     /**
