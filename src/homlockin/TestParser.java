@@ -4,8 +4,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * A pályafájl betöltéséért felelős segédosztály.
+ * A {@code loadPalya()} metódus egy szöveges fájlból olvassa be a pálya útszakaszait,
+ * azok kapcsolatait és kezdeti csapadékállapotát, majd a {@link Main} statikus adatszerkezeteibe
+ * tölti be az objektumokat.
+ * <p>
+ * A fájlformátum soronként tartalmaz egy útszakaszt:
+ * <pre>
+ *   azonosito tipus jobbSzakasz [kovetkezoSzakasz...] : [ho&lt;n&gt;] [jeg&lt;n&gt;[t]] [zuzalek]
+ * </pre>
+ * ahol a tipus {@code U} (útszakasz), {@code A} (alagút) vagy {@code H} (híd) lehet,
+ * a {@code -} karakter hiányzó referenciát jelöl, és a {@code #} kezdetű sorok megjegyzések.
+ */
 public class TestParser {
 
+    /**
+     * Betölti a pályát a megadott fájlból.
+     * Az első menetben létrehozza az útszakasz objektumokat, a másodikban beállítja
+     * az összeköttetéseket és a csapadékállapotokat.
+     *
+     * @param filename a betöltendő pályafájl elérési útja
+     */
     public static void loadPalya(String filename) {
         try {
             Scanner sc = new Scanner(new File(filename));

@@ -10,14 +10,38 @@ import tests.RunTests;
 
 import java.util.Map;
 
+/**
+ * A "Homlockin" játék fő belépési pontja és parancsfeldolgozója.
+ * A {@code main()} metódus beolvassa a parancsokat a standard inputról,
+ * és a {@code processCommand()} metóduson keresztül végrehajtja azokat.
+ * <p>
+ * Statikus referenciákat tart nyilván a városhoz ({@link Varos}), a bolthoz ({@link Bolt}),
+ * a járművekhez, útszakaszokhoz és játékosokhoz (betűrend szerint rendezett {@link TreeMap}-ekben).
+ */
 public class Main {
+
+    /** A játékban szereplő város. */
     public static Varos varos = new Varos("Homlockin");
+
+    /** A játékban szereplő bolt, ahol a játékosok vásárolhatnak. */
     public static Bolt bolt = new Bolt();
-    
+
+    /** Az összes jármű névről jármű objektumra mutató térképe (azonosító → jármű). */
     public static Map<String, Jarmu> jarmuvek = new TreeMap<>();
+
+    /** Az összes útszakasz névről útszakasz objektumra mutató térképe (azonosító → útszakasz). */
     public static Map<String, Utszakasz> utszakaszok = new TreeMap<>();
+
+    /** Az összes játékos névről játékos objektumra mutató térképe (azonosító → játékos). */
     public static Map<String, Jatekos> jatekosok = new TreeMap<>();
 
+    /**
+     * A program belépési pontja. Beolvassa a standard inputról a parancsokat soronként,
+     * és mindegyiket a {@link #processCommand(String)} metódussal dolgozza fel.
+     * A ciklus az {@code exit} paranccsal vagy a bemenet végével szakítható meg.
+     *
+     * @param args parancssori argumentumok (nem használtak)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) { 
@@ -30,6 +54,18 @@ public class Main {
         scanner.close();
     }
 
+    /**
+     * Feldolgoz egy szöveges parancsot.
+     * Az első szó határozza meg a parancs típusát (pl. {@code init}, {@code add}, {@code step} stb.).
+     * <p>
+     * Támogatott parancsok (összefoglaló):
+     * <ul>
+     *   <li>{@code tests} – lefuttatja az összes tesztesetet</li>
+     *   <li>{@code tests N} – csak az N-edik tesztesetet futtatja</li>
+     * </ul>
+     *
+     * @param line a feldolgozandó parancssori szöveg
+     */
     public static void processCommand(String line) {
         String[] parts = line.split("\\s+");
         String cmd = parts[0].toLowerCase();
@@ -84,7 +120,7 @@ public class Main {
                     handleList(parts);
                     break;
                 case "tests":
-                    RunTests.runTest(parts);;
+                    RunTests.runTest(java.util.Arrays.copyOfRange(parts, 1, parts.length));
                     break;
                 default:
                     // ignore or error
@@ -92,6 +128,12 @@ public class Main {
         } catch (Exception e) {}
     }
 
+    /**
+     * Az {@code add} parancs kezelője: takarítójátékost ({@code -tj}) vagy buszvezetőjátékost ({@code -bj})
+     * ad hozzá a játékhoz.
+     *
+     * @param parts a parancs részei ({@code add -tj id} vagy {@code add -bj id v1 v2})
+     */
     private static void handleAdd(String[] parts) {
         if (parts.length < 3) return;
         String type = parts[1];
@@ -125,6 +167,11 @@ public class Main {
         }
     }
 
+    /**
+     * A {@code swap} parancs kezelője: lecseréli egy hókotró aktív fejét a megadott típusra.
+     *
+     * @param parts a parancs részei ({@code swap hkId fejTipus})
+     */
     private static void handleSwap(String[] parts) {
         if (parts.length < 3) return;
         String hkId = parts[1];
@@ -139,6 +186,11 @@ public class Main {
         }
     }
 
+    /**
+     * A {@code car} parancs kezelője: autót helyez el a pályán a megadott pozíción és útvonallal.
+     *
+     * @param parts a parancs részei ({@code car id startSzakasz [utszakasz...]})
+     */
     private static void handleCar(String[] parts) {
         if (parts.length < 3) return;
         String id = parts[1];
@@ -156,6 +208,13 @@ public class Main {
         }
     }
 
+    /**
+     * A {@code buy} parancs kezelője: különböző vásárlási lehetőségeket kezel:
+     * hókotró ({@code -hk}), hókotrófej ({@code -fej}), só ({@code -so}),
+     * bio-kerozin ({@code -kerozin}), zúzalék ({@code -zuzalek}).
+     *
+     * @param parts a parancs részei
+     */
     private static void handleBuy(String[] parts) {
         if (parts.length < 3) return;
         String type = parts[1];
@@ -243,6 +302,11 @@ public class Main {
         }
     }
 
+    /**
+     * A {@code route} parancs kezelője: beállít egy új útvonalt egy jármű vagy buszvezetőjátékos számára.
+     *
+     * @param parts a parancs részei ({@code route jarmuId utszakasz1 [utszakasz2...]})
+     */
     private static void handleRoute(String[] parts) {
         if (parts.length < 3) return;
         String id = parts[1];
@@ -268,6 +332,12 @@ public class Main {
         System.out.println("\"" + id + "\" nevű buszvezető játékos nem létezik");
     }
 
+    /**
+     * A {@code list} parancs kezelője: kilistázza a takarítójátékosokat ({@code -tj}),
+     * buszvezetőket ({@code -bj}) vagy pálya útszakaszait ({@code -palya}).
+     *
+     * @param parts a parancs részei ({@code list -tj|-bj|-palya})
+     */
     private static void handleList(String[] parts) {
         if (parts.length < 2) return;
         String type = parts[1];
@@ -296,6 +366,12 @@ public class Main {
         }
     }
 
+    /**
+     * Megkeresi egy hókotró tulajdonos takarítójátékosát.
+     *
+     * @param hk a keresett hókotró
+     * @return a tulajdonos {@link TakaritoJatekos}, vagy {@code null}, ha nem található
+     */
     private static TakaritoJatekos findOwner(Hokotro hk) {
         for (Jatekos j : jatekosok.values()) {
             if (j instanceof TakaritoJatekos) {
@@ -305,6 +381,12 @@ public class Main {
         return null;
     }
 
+    /**
+     * A {@code save} parancs kezelője: elmenti a játékállást a megadott (vagy alapértelmezett) fájlba.
+     * Az állapot kiírása a {@link StateDumper#dumpAll()} metódus segítségével történik.
+     *
+     * @param parts a parancs részei ({@code save [fajlnev]})
+     */
     private static void handleSave(String[] parts) {
         String filename = "jatekallas.txt";
         if (parts != null && parts.length >= 2 && parts[1] != null && !parts[1].isEmpty()) {
@@ -330,6 +412,13 @@ public class Main {
         }
     }
 
+    /**
+     * Létrehoz egy hókotrófej objektumot a megadott típusnév alapján.
+     *
+     * @param type a fej típusának neve (pl. {@code "sopro"}, {@code "hanyo"}, {@code "jegtoro"},
+     *             {@code "sarkany"}, {@code "zuzalek"}, {@code "soszoro"})
+     * @return az új {@link HokotroFej} példány, vagy {@code null}, ha ismeretlen a típus
+     */
     private static HokotroFej createFej(String type) {
         switch (type) {
             case "sopro": return new Soprofej();
