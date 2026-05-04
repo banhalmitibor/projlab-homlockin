@@ -6,7 +6,26 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * A játékállás kiírásáért felelős segédosztály.
+ * A {@code dumpAll()} metódus kiírja a konzolra az összes takarítójátékos,
+ * buszvezetőjátékos és útszakasz aktuális állapotát betűrendben.
+ * A kiírás formátumát a tesztelvárások határozzák meg.
+ */
 public class StateDumper {
+
+    /**
+     * Kiírja az összes játékos és útszakasz aktuális állapotát a standard kimenetre.
+     * <p>
+     * A kiírás sorrendje:
+     * <ol>
+     *   <li>Takarítójátékosok (betűrendben): név, pénz, a tulajdonában lévő hókotrok azonosítói;
+     *       majd minden hókotró sorában: azonosító, aktív fej típusa, só, kerozin, zúzalék mennyisége</li>
+     *   <li>Buszvezetőjátékosok (betűrendben): név, pontszám</li>
+     *   <li>Pálya útszakaszainak állapota (betűrendben): azonosító, az ott lévő jármű azonosítója
+     *       (vagy "-"), majd a csapadékállapotok (hó, jég, zúzalék)</li>
+     * </ol>
+     */
     public static void dumpAll() {
         // 1. Takarító játékosok (betűrendben)
         Map<String, TakaritoJatekos> tjs = new TreeMap<>();
