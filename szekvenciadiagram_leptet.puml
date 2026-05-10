@@ -1,0 +1,25 @@
+@startuml
+title Automatikus léptetés időzítővel
+
+autonumber
+actor "Játékmotor / Rendszeridő" as Timer
+participant "Varos" as Varos
+participant "Jarmu" as Jarmu
+participant "StateDumper / UI" as UI
+
+loop minden Δt időközönként
+  Timer -> Varos : leptet()
+  activate Varos
+  loop minden járműre
+    Varos -> Jarmu : lep()
+    activate Jarmu
+    Jarmu --> Varos
+    deactivate Jarmu
+  end
+  Varos -> Varos : célba ért autók eltávolítása
+  Varos --> Timer
+  deactivate Varos
+
+  Timer -> UI : állapot frissítés
+end
+@enduml
