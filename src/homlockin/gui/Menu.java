@@ -19,6 +19,7 @@ public class Menu extends JFrame {
         setTitle("Homlockin - Havas Kaland");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1024, 768);
+        setResizable(false);
         setLocationRelativeTo(null);
 
         try {
@@ -34,7 +35,8 @@ public class Menu extends JFrame {
                 }
             }
         };
-        contentPanel.setLayout(new GridBagLayout());
+  contentPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
         ujJatekButton = createStyledButton("New Game!");
         ujJatekButton.setActionCommand("UJBT");
@@ -42,29 +44,39 @@ public class Menu extends JFrame {
         ranglistaButton = createStyledButton("Scoreboard");
         ranglistaButton.setActionCommand("LBBT");
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.weighty = 1.0;  
+        gbc.weightx = 0.5;   
+        gbc.fill = GridBagConstraints.NONE;
+
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTHWEST; 
+        gbc.insets = new Insets(40, 50, 0, 0); 
         contentPanel.add(ujJatekButton, gbc);
-        gbc.gridy = 1;
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        gbc.insets = new Insets(40, 0, 0, 70); 
         contentPanel.add(ranglistaButton, gbc);
 
         add(contentPanel);
     }
 
-    private JButton createStyledButton(String text) {
+        private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Arial", Font.BOLD, 32));
-        button.setForeground(new Color(0, 191, 255));
-        button.setBackground(Color.WHITE);
+        button.setContentAreaFilled(false); 
+        button.setBorderPainted(false);
         button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(0, 0, 139), 3),
-            BorderFactory.createEmptyBorder(10, 20, 10, 20)
-        ));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+        
+        button.setForeground(new Color(0, 0, 0, 0)); 
+        
+        button.setPreferredSize(new Dimension(380, 120)); 
+        
         return button;
     }
+    
 
     public void connectButtons(ActionListener e) {
         ujJatekButton.addActionListener(e);
