@@ -40,6 +40,10 @@ public class UtszakaszUI extends JButton {
         g2.setColor(Color.BLACK);
         g2.drawRect(0, 0, getWidth(), getHeight());
 
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Arial", Font.BOLD, 12));
+        g2.drawString(model.getName(), 6, 14);
+
         // Hószint és Jégszint oszlopok a széleken
         int maxH = getHeight() - 10;
         

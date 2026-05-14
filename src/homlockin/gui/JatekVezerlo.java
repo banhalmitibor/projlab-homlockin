@@ -6,23 +6,40 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.Random;
 
 /**
  * A játék vezérléséért felelős osztály.
  */
 public class JatekVezerlo implements ActionListener {
+    private static final String DEFAULT_MAP_FILE = "palya.txt";
+    private static final int GAME_TICK_INTERVAL_MS = 1000;
+    private static final int CAR_SPAWN_TICK_INTERVAL = 4;
+    private static final int SNOWFALL_TICK_INTERVAL = 6;
+    private static final int MAX_AUTO_ROUTE_LENGTH = 16;
     private Varos v;
     private Tabla t;
     private Menu m;
     private Jatekos kivalasztottJatekos;
     private Jarmu kivalasztottJarmu;
+    private Timer jatekTimer;
+    private int tickSzamlalo;
+    private int autoCounter;
+    private int hokotroCounter;
+    private final Random random = new Random();
+    private String pendingHokotroNev;
 
     public JatekVezerlo() {
         this.v = Main.varos;
         this.m = new Menu();
         this.t = new Tabla();
         m.connectButtons(this);
+        tickSzamlalo = 0;
+        autoCounter = 1;
+        hokotroCounter = 1;
     }
 
     public void start() {
@@ -67,9 +84,20 @@ public class JatekVezerlo implements ActionListener {
     }
 
     private void jarmuMegnyomva(int jarmuIndex) {
-        // A spec szerint a járműveket is indexeljük vagy azonosítjuk
-        // Egyelőre a kiválasztott járművet állítjuk be.
-        // Mivel a JarmuUI-ra kattintunk, az actionCommand-ba tettük az indexet.
+        List<JarmuUI> displayed = t.getJarmuvek();
+        if (jarmuIndex < 0 || jarmuIndex >= displayed.size()) return;
+        JarmuUI selected = displayed.get(jarmuIndex);
+        if (selected instanceof HokotroButton) {
+            kivalasztottJarmu = ((HokotroButton) selected).getLogic();
+            t.getStatuszPanel().update((Hokotro) kivalasztottJarmu);
+            updatePenz();
+        } else if (selected instanceof BuszButton) {
+            kivalasztottJarmu = ((BuszButton) selected).getLogic();
+            t.getStatuszPanel().update((HokotroInfo) null);
+        } else if (selected instanceof AutoButton) {
+            kivalasztottJarmu = ((AutoButton) selected).getLogic();
+            t.getStatuszPanel().update((HokotroInfo) null);
+        }
     }
 
     private void jatekosMegnyomva(int jatekosIndex) {
@@ -77,22 +105,30 @@ public class JatekVezerlo implements ActionListener {
         if (jatekosIndex < jList.size()) {
             kivalasztottJatekos = jList.get(jatekosIndex);
             t.getJatekosPanel().highlightJatekos(jatekosIndex);
-            t.getStatuszPanel().updatePenz(kivalasztottJatekos instanceof TakaritoJatekos ? ((TakaritoJatekos)kivalasztottJatekos).getPenz() : 0);
+            updatePenz();
+            if (kivalasztottJatekos instanceof TakaritoJatekos) {
+                List<Hokotro> hokotrok = ((TakaritoJatekos) kivalasztottJatekos).getHokotroi();
+                if (!hokotrok.isEmpty()) {
+                    kivalasztottJarmu = hokotrok.get(0);
+                    t.getStatuszPanel().update((Hokotro) kivalasztottJarmu);
+                } else {
+                    kivalasztottJarmu = null;
+                    t.getStatuszPanel().update((HokotroInfo) null);
+                }
+            } else if (kivalasztottJatekos instanceof BuszvezetoJatekos) {
+                kivalasztottJarmu = ((BuszvezetoJatekos) kivalasztottJatekos).getVezeti();
+                t.getStatuszPanel().update((HokotroInfo) null);
+            }
         }
     }
 
     private void hokotroVasarlasMegnyomva() {
         if (kivalasztottJatekos instanceof TakaritoJatekos) {
-            String name = JOptionPane.showInputDialog(t, "Hókotró neve:");
+            String name = JOptionPane.showInputDialog(t, "Hókotró neve:", "hk" + hokotroCounter);
             if (name != null) {
-                // Következő útszakaszra kattintással helyeződik le (spec szerint)
-                // Egyelőre az első szabad útszakaszra tesszük.
-                Utszakasz start = Main.utszakaszok.values().iterator().next();
-                Hokotro hk = Main.bolt.hokotrotVasarol(name, (TakaritoJatekos) kivalasztottJatekos, start);
-                if (hk != null) {
-                    Main.varos.addJarmu(hk);
-                    Main.jarmuvek.put(name, hk);
-                    t.frissit();
+                pendingHokotroNev = name.trim();
+                if (!pendingHokotroNev.isEmpty()) {
+                    JOptionPane.showMessageDialog(t, "Válassz ki egy útszakaszt, ahova le szeretnéd rakni az új hókotrót.");
                 }
             }
         }
@@ -100,22 +136,28 @@ public class JatekVezerlo implements ActionListener {
 
     private void biokerozinVasarlasMegnyomva() {
         if (kivalasztottJarmu instanceof Hokotro) {
+            setBoltVasarlo();
             Main.bolt.biokerozinVasarol((Hokotro) kivalasztottJarmu);
             t.getStatuszPanel().update((Hokotro) kivalasztottJarmu);
+            updatePenz();
         }
     }
 
     private void soVasarlasMegnyomva() {
         if (kivalasztottJarmu instanceof Hokotro) {
+            setBoltVasarlo();
             Main.bolt.sotVasarol((Hokotro) kivalasztottJarmu);
             t.getStatuszPanel().update((Hokotro) kivalasztottJarmu);
+            updatePenz();
         }
     }
 
     private void zuzalekVasarlasMegnyomva() {
         if (kivalasztottJarmu instanceof Hokotro) {
+            setBoltVasarlo();
             Main.bolt.zuzalekotVasarol((Hokotro) kivalasztottJarmu);
             t.getStatuszPanel().update((Hokotro) kivalasztottJarmu);
+            updatePenz();
         }
     }
 
@@ -127,17 +169,38 @@ public class JatekVezerlo implements ActionListener {
 
     private void buyFej(HokotroFej fej) {
         if (kivalasztottJarmu instanceof Hokotro) {
+            setBoltVasarlo();
             Main.bolt.hokotroFejetVasarol((Hokotro) kivalasztottJarmu, fej);
             t.getStatuszPanel().update((Hokotro) kivalasztottJarmu);
+            updatePenz();
         }
     }
 
     private void utszakaszMegnyomva(int index) {
+        if (index < 0 || index >= t.getSzakaszok().size()) return;
         Utszakasz target = t.getSzakaszok().get(index).getLogic();
+        if (pendingHokotroNev != null && kivalasztottJatekos instanceof TakaritoJatekos) {
+            TakaritoJatekos tj = (TakaritoJatekos) kivalasztottJatekos;
+            Hokotro hk = Main.bolt.hokotrotVasarol(pendingHokotroNev, tj, target);
+            if (hk != null) {
+                Main.varos.addJarmu(hk);
+                Main.jarmuvek.put(pendingHokotroNev, hk);
+                kivalasztottJarmu = hk;
+                hokotroCounter++;
+                t.getStatuszPanel().update(hk);
+                updatePenz();
+                t.frissit();
+            } else {
+                JOptionPane.showMessageDialog(t, "Nincs elég pénz új hókotróra.");
+            }
+            pendingHokotroNev = null;
+            return;
+        }
+
         if (kivalasztottJarmu != null) {
+            kivalasztottJarmu.getUtvonala().clear();
             kivalasztottJarmu.getUtvonala().addUtszakasz(target);
-            // Ha busz, akkor léptethetjük is? Vagy külön gomb??
-            // Spec szerint: "útvonalat beállítani a járműnek egy célútszakaszra kattintással"
+            t.frissit();
         }
     }
 
@@ -150,9 +213,20 @@ public class JatekVezerlo implements ActionListener {
     }
 
     private void ujJatek() {
-        // Inicializálás palya.txt-ből
-        Main.processCommand("palya palya.txt");
-        
+        if (jatekTimer != null) {
+            jatekTimer.stop();
+        }
+        Main.processCommand("init " + DEFAULT_MAP_FILE);
+        this.v = Main.varos;
+        if (Main.utszakaszok.isEmpty()) {
+            JOptionPane.showMessageDialog(m, "A pálya nem tölthető be: " + DEFAULT_MAP_FILE, "Hiba", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.kivalasztottJarmu = null;
+        this.kivalasztottJatekos = null;
+        this.pendingHokotroNev = null;
+        this.tickSzamlalo = 0;
+
         UIManager.put("OptionPane.background", new Color(144, 238, 144));
         UIManager.put("Panel.background", new Color(144, 238, 144));
 
@@ -188,8 +262,23 @@ public class JatekVezerlo implements ActionListener {
                 Main.varos.addJatekos(tj);
                 Main.jatekosok.put(name, tj);
                 t.getJatekosPanel().addJatekos(name, "Takarító", i);
+                Utszakasz start = findFreeStartUtszakasz();
+                if (start != null) {
+                    String hkId = "hk_" + name;
+                    Hokotro hk = Main.bolt.hokotrotVasarol(hkId, tj, start);
+                    if (hk != null) {
+                        Main.varos.addJarmu(hk);
+                        Main.jarmuvek.put(hkId, hk);
+                    }
+                }
             } else {
-                Utszakasz v1 = Main.utszakaszok.values().iterator().next();
+                Utszakasz v1 = findFreeStartUtszakasz();
+                if (v1 == null && !Main.utszakaszok.isEmpty()) {
+                    v1 = Main.utszakaszok.values().iterator().next();
+                }
+                if (v1 == null) {
+                    continue;
+                }
                 Utszakasz v2 = v1.getKovetkezok().isEmpty() ? v1 : v1.getKovetkezok().get(0);
                 BuszvezetoJatekos bj = new BuszvezetoJatekos(name, v1, v2);
                 Main.varos.addJatekos(bj);
@@ -208,5 +297,116 @@ public class JatekVezerlo implements ActionListener {
         m.setVisible(false);
         t.setVisible(true);
         t.frissit();
+        inditAutomatikusJatekot();
+    }
+
+    private void setBoltVasarlo() {
+        if (kivalasztottJatekos instanceof TakaritoJatekos) {
+            Main.bolt.setVasarol((TakaritoJatekos) kivalasztottJatekos);
+            return;
+        }
+        if (kivalasztottJarmu instanceof Hokotro) {
+            for (Jatekos j : Main.jatekosok.values()) {
+                if (j instanceof TakaritoJatekos && ((TakaritoJatekos) j).getHokotroi().contains(kivalasztottJarmu)) {
+                    Main.bolt.setVasarol((TakaritoJatekos) j);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void updatePenz() {
+        if (kivalasztottJatekos instanceof TakaritoJatekos) {
+            t.getStatuszPanel().updatePenz(((TakaritoJatekos) kivalasztottJatekos).getPenz());
+        } else {
+            t.getStatuszPanel().updatePenz(0);
+        }
+    }
+
+    private Utszakasz findFreeStartUtszakasz() {
+        for (Utszakasz u : Main.utszakaszok.values()) {
+            if (u.getJarmu() == null && u.jarhato()) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    private void inditAutomatikusJatekot() {
+        jatekTimer = new Timer(GAME_TICK_INTERVAL_MS, e -> {
+            tickSzamlalo++;
+            if (tickSzamlalo % CAR_SPAWN_TICK_INTERVAL == 0) {
+                inditAutot();
+            }
+            if (tickSzamlalo % SNOWFALL_TICK_INTERVAL == 0) {
+                Main.varos.havazas();
+            }
+            Main.varos.leptet();
+            t.frissit();
+            updatePenz();
+
+            if (Main.varos.jatekVegeEllenorzes()) {
+                ((Timer) e.getSource()).stop();
+                t.jatekVege();
+            }
+        });
+        jatekTimer.start();
+    }
+
+    private void inditAutot() {
+        Utszakasz start = findAutoStart();
+        if (start == null) return;
+
+        String id = "auto" + autoCounter++;
+        Auto a = new Auto(id);
+        a.setAllRajta(start);
+        Utvonal utvonal = generalAutoUtvonal(start);
+        if (utvonal.getKivantUtszakasz() == null) {
+            start.setJarmu(null);
+            return;
+        }
+        a.setUtvonala(utvonal);
+        Main.varos.addJarmu(a);
+        Main.jarmuvek.put(id, a);
+    }
+
+    private Utszakasz findAutoStart() {
+        Set<Utszakasz> nonEntry = new HashSet<>();
+        for (Utszakasz u : Main.utszakaszok.values()) {
+            nonEntry.addAll(u.getKovetkezok());
+        }
+        for (Utszakasz u : Main.utszakaszok.values()) {
+            if (!nonEntry.contains(u) && u.getJarmu() == null && u.jarhato()) {
+                return u;
+            }
+        }
+        return findFreeStartUtszakasz();
+    }
+
+    private Utvonal generalAutoUtvonal(Utszakasz start) {
+        Utvonal utvonal = new Utvonal();
+        Utszakasz current = start;
+        Set<Utszakasz> visited = new HashSet<>();
+        visited.add(start);
+
+        for (int i = 0; i < MAX_AUTO_ROUTE_LENGTH; i++) {
+            List<Utszakasz> kov = current.getKovetkezok();
+            if (kov.isEmpty()) break;
+            Utszakasz next = null;
+            List<Utszakasz> candidates = new ArrayList<>();
+            for (Utszakasz k : kov) {
+                if (!visited.contains(k)) candidates.add(k);
+            }
+            if (!candidates.isEmpty()) {
+                next = candidates.get(random.nextInt(candidates.size()));
+            } else {
+                next = kov.get(random.nextInt(kov.size()));
+            }
+            utvonal.addUtszakasz(next);
+            current = next;
+            if (!visited.add(next)) break;
+        }
+
+        return utvonal;
     }
 }
