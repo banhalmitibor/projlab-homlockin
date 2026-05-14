@@ -9,6 +9,13 @@ import java.awt.event.ActionListener;
 public abstract class JarmuUI extends JButton {
     protected UtszakaszUI jelenlegiUtszakasz;
 
+    public JarmuUI() {
+        setBorderPainted(false);
+        setFocusPainted(false);
+        setOpaque(false);
+        setContentAreaFilled(false);
+    }
+
     public void connectButtons(ActionListener e) {
         this.addActionListener(e);
     }

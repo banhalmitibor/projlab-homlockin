@@ -16,6 +16,9 @@ public class StatuszPanel extends JPanel {
     private JLabel penzLabel; // Added based on text "jobb felső sarkában mindig ... pénzmennyisége"
 
     private JButton hokotroButton;
+    private JButton biokerozinButton;
+    private JButton soButton;
+    private JButton zuzalekButton;
     private JButton hanyofejButton;
     private JButton soprofejButton;
     private JButton jegtorofejButton;
@@ -47,6 +50,15 @@ public class StatuszPanel extends JPanel {
 
         hokotroButton = new JButton("Új hókotró");
         hokotroButton.setActionCommand("HKBBT");
+
+        biokerozinButton = new JButton("Biokerozin");
+        biokerozinButton.setActionCommand("BKBT");
+
+        soButton = new JButton("Só");
+        soButton.setActionCommand("SBT");
+
+        zuzalekButton = new JButton("Zúzalék");
+        zuzalekButton.setActionCommand("ZBT");
         
         hanyofejButton = new JButton("Hányófej");
         hanyofejButton.setActionCommand("FBBT_hanyo");
@@ -64,6 +76,9 @@ public class StatuszPanel extends JPanel {
         sarkanyfejButton.setActionCommand("FBBT_sarkany");
 
         add(hokotroButton);
+        add(biokerozinButton);
+        add(soButton);
+        add(zuzalekButton);
         add(hanyofejButton);
         add(soprofejButton);
         add(jegtorofejButton);
@@ -91,6 +106,9 @@ public class StatuszPanel extends JPanel {
 
     public void connectButtons(ActionListener e) {
         hokotroButton.addActionListener(e);
+        biokerozinButton.addActionListener(e);
+        soButton.addActionListener(e);
+        zuzalekButton.addActionListener(e);
         hanyofejButton.addActionListener(e);
         soprofejButton.addActionListener(e);
         jegtorofejButton.addActionListener(e);
