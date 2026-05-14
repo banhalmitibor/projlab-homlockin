@@ -15,6 +15,11 @@ import java.util.Random;
  * A játék vezérléséért felelős osztály.
  */
 public class JatekVezerlo implements ActionListener {
+    private static final String DEFAULT_MAP_FILE = "palya.txt";
+    private static final int GAME_TICK_INTERVAL_MS = 1000;
+    private static final int CAR_SPAWN_TICK_INTERVAL = 4;
+    private static final int SNOWFALL_TICK_INTERVAL = 6;
+    private static final int MAX_AUTO_ROUTE_LENGTH = 16;
     private Varos v;
     private Tabla t;
     private Menu m;
@@ -88,10 +93,10 @@ public class JatekVezerlo implements ActionListener {
             updatePenz();
         } else if (selected instanceof BuszButton) {
             kivalasztottJarmu = ((BuszButton) selected).getLogic();
-            t.getStatuszPanel().update(null);
+            t.getStatuszPanel().update((HokotroInfo) null);
         } else if (selected instanceof AutoButton) {
             kivalasztottJarmu = ((AutoButton) selected).getLogic();
-            t.getStatuszPanel().update(null);
+            t.getStatuszPanel().update((HokotroInfo) null);
         }
     }
 
@@ -108,11 +113,11 @@ public class JatekVezerlo implements ActionListener {
                     t.getStatuszPanel().update((Hokotro) kivalasztottJarmu);
                 } else {
                     kivalasztottJarmu = null;
-                    t.getStatuszPanel().update(null);
+                    t.getStatuszPanel().update((HokotroInfo) null);
                 }
             } else if (kivalasztottJatekos instanceof BuszvezetoJatekos) {
                 kivalasztottJarmu = ((BuszvezetoJatekos) kivalasztottJatekos).getVezeti();
-                t.getStatuszPanel().update(null);
+                t.getStatuszPanel().update((HokotroInfo) null);
             }
         }
     }
@@ -124,7 +129,6 @@ public class JatekVezerlo implements ActionListener {
                 pendingHokotroNev = name.trim();
                 if (!pendingHokotroNev.isEmpty()) {
                     JOptionPane.showMessageDialog(t, "Válassz ki egy útszakaszt, ahova le szeretnéd rakni az új hókotrót.");
-                    hokotroCounter++;
                 }
             }
         }
@@ -182,6 +186,7 @@ public class JatekVezerlo implements ActionListener {
                 Main.varos.addJarmu(hk);
                 Main.jarmuvek.put(pendingHokotroNev, hk);
                 kivalasztottJarmu = hk;
+                hokotroCounter++;
                 t.getStatuszPanel().update(hk);
                 updatePenz();
                 t.frissit();
@@ -211,8 +216,12 @@ public class JatekVezerlo implements ActionListener {
         if (jatekTimer != null) {
             jatekTimer.stop();
         }
-        Main.processCommand("init palya.txt");
+        Main.processCommand("init " + DEFAULT_MAP_FILE);
         this.v = Main.varos;
+        if (Main.utszakaszok.isEmpty()) {
+            JOptionPane.showMessageDialog(m, "A pálya nem tölthető be: " + DEFAULT_MAP_FILE, "Hiba", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         this.kivalasztottJarmu = null;
         this.kivalasztottJatekos = null;
         this.pendingHokotroNev = null;
@@ -264,7 +273,12 @@ public class JatekVezerlo implements ActionListener {
                 }
             } else {
                 Utszakasz v1 = findFreeStartUtszakasz();
-                if (v1 == null) v1 = Main.utszakaszok.values().iterator().next();
+                if (v1 == null && !Main.utszakaszok.isEmpty()) {
+                    v1 = Main.utszakaszok.values().iterator().next();
+                }
+                if (v1 == null) {
+                    continue;
+                }
                 Utszakasz v2 = v1.getKovetkezok().isEmpty() ? v1 : v1.getKovetkezok().get(0);
                 BuszvezetoJatekos bj = new BuszvezetoJatekos(name, v1, v2);
                 Main.varos.addJatekos(bj);
@@ -319,12 +333,12 @@ public class JatekVezerlo implements ActionListener {
     }
 
     private void inditAutomatikusJatekot() {
-        jatekTimer = new Timer(1000, e -> {
+        jatekTimer = new Timer(GAME_TICK_INTERVAL_MS, e -> {
             tickSzamlalo++;
-            if (tickSzamlalo % 4 == 0) {
+            if (tickSzamlalo % CAR_SPAWN_TICK_INTERVAL == 0) {
                 inditAutot();
             }
-            if (tickSzamlalo % 6 == 0) {
+            if (tickSzamlalo % SNOWFALL_TICK_INTERVAL == 0) {
                 Main.varos.havazas();
             }
             Main.varos.leptet();
@@ -375,7 +389,7 @@ public class JatekVezerlo implements ActionListener {
         Set<Utszakasz> visited = new HashSet<>();
         visited.add(start);
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < MAX_AUTO_ROUTE_LENGTH; i++) {
             List<Utszakasz> kov = current.getKovetkezok();
             if (kov.isEmpty()) break;
             Utszakasz next = null;

@@ -232,7 +232,6 @@ public class Tabla extends JFrame {
 
         double angle = Math.atan2(y2 - y1, x2 - x1);
         int arrowLength = 12;
-        int arrowWidth = 6;
         int xArrow1 = (int) (x2 - arrowLength * Math.cos(angle - Math.PI / 6));
         int yArrow1 = (int) (y2 - arrowLength * Math.sin(angle - Math.PI / 6));
         int xArrow2 = (int) (x2 - arrowLength * Math.cos(angle + Math.PI / 6));
