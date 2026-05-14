@@ -40,6 +40,12 @@ public class Main {
      * @param args parancssori argumentumok (nem használtak)
      */
     public static void main(String[] args) {
+        if (args.length == 0 && System.console() != null) {
+            // Start GUI
+            new homlockin.gui.JatekVezerlo().start();
+            return;
+        }
+        
         Scanner scanner = new Scanner(System.in);
         while (true) { 
             if (!scanner.hasNextLine()) break;

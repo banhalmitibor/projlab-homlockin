@@ -2,7 +2,7 @@ SRC_DIR = src
 OUT_DIR = out
 MAIN_CLASS = homlockin.Main
 
-SOURCES = $(wildcard $(SRC_DIR)/homlockin/*.java)
+SOURCES = $(shell find $(SRC_DIR) -name "*.java")
 
 .PHONY: all clean run
 

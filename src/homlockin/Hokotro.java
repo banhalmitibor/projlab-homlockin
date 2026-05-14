@@ -10,7 +10,7 @@ import java.util.List;
  * A hókotrónak van só-, bio-kerozin- és zúzalékkészlete, amelyek felhasználhatók az egyes fejtípusokhoz.
  * Alapból egy {@link Soprofej} típusú fejjel rendelkezik. Ütközés esetén a hókotrónak nem esik baja.
  */
-public class Hokotro extends Jarmu {
+public class Hokotro extends Jarmu implements HokotroInfo {
 
     /** A hókotró összes, eddig megvásárolt/felszerelt fejének listája. */
     private List<HokotroFej> fejei;
@@ -242,4 +242,13 @@ public class Hokotro extends Jarmu {
      * @return a zúzalék mennyisége
      */
     public int getZuzalek() { return zuzalekMennyiseg; }
+
+    @Override
+    public int getBiokerozin() { return bioKerozinmennyiseg; }
+
+    @Override
+    public String getFej() {
+        if (felrakottFeje == null) return "Nincs";
+        return felrakottFeje.getClass().getSimpleName().replace("fej", "").toLowerCase();
+    }
 }
