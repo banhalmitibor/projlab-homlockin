@@ -68,7 +68,7 @@ public class Ranglista extends JFrame {
                     String line = sc.nextLine();
                     String[] parts = line.split("\\s+");
                     if (parts.length >= 2) {
-                        model.addRow(new Object[]{parts[0], parts[1]});
+                        model.addRow(new Object[]{parts[0], parts[1]+" pont"});
                     }
                 }
                 sc.close();
