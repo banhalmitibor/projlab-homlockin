@@ -136,7 +136,7 @@ public class JatekVezerlo implements ActionListener {
         Utszakasz target = t.getSzakaszok().get(index).getLogic();
         if (kivalasztottJarmu != null) {
             kivalasztottJarmu.getUtvonala().addUtszakasz(target);
-            // Ha busz, akkor léptethetjük is? Vagy külön gomb?
+            // Ha busz, akkor léptethetjük is? Vagy külön gomb??
             // Spec szerint: "útvonalat beállítani a járműnek egy célútszakaszra kattintással"
         }
     }

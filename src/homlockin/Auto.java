@@ -39,7 +39,7 @@ public class Auto extends Jarmu {
         Utszakasz kov = utvonala.getKivantUtszakasz();
         kov = allRajta.kovetkezoUtszakasz(kov);
         if (kov == null) {
-            checkCélbaérés();
+            checkCelbaEres();
             return;
         }
 
@@ -61,14 +61,14 @@ public class Auto extends Jarmu {
             this.csuszkal();
         }
         
-        checkCélbaérés();
+        checkCelbaEres();
     }
 
     /**
      * Ellenőrzi, hogy az autó elérte-e az útvonal végét.
      * Ha igen, eltávolítja az autót az útszakaszról (az autó eltűnik a pályáról).
      */
-    private void checkCélbaérés() {
+    private void checkCelbaEres() {
         if (allRajta != null && utvonala.isVege()) {
             allRajta.setJarmu(null);
             allRajta = null;
